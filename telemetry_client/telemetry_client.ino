@@ -6,8 +6,8 @@
 #include <pb_decode.h>
 #include <pb_encode.h>
 
-char ssid[] = "TP-LINK_2.4GHz_677647";    //  your network SSID (name) 
-char pass[] = "98238316";   // your network password
+char ssid[] = "";
+char pass[] = "";
 const uint16_t port  = 10101;
 const char* addr = "192.168.1.100";
 WiFiClient  client;
