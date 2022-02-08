@@ -21,8 +21,6 @@ message TelemetryEvent {
   }
   DataType data_type = 3;
   Orientation orientation = 4;
-
-
 }
 
 

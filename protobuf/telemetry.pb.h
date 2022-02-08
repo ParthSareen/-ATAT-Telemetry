@@ -19,11 +19,18 @@ typedef enum _pb_TelemetryEvent_DataType {
     pb_TelemetryEvent_DataType_ENCODER = 5 
 } pb_TelemetryEvent_DataType;
 
+typedef enum _pb_TelemetryEvent_Orientation { 
+    pb_TelemetryEvent_Orientation_FRONT = 0, 
+    pb_TelemetryEvent_Orientation_SIDE = 1, 
+    pb_TelemetryEvent_Orientation_NONE = 2 
+} pb_TelemetryEvent_Orientation;
+
 /* Struct definitions */
 typedef struct _pb_TelemetryEvent { 
     int32_t timestamp; 
     float data; 
     pb_TelemetryEvent_DataType data_type; 
+    pb_TelemetryEvent_Orientation orientation; 
 } pb_TelemetryEvent;
 
 
@@ -32,25 +39,31 @@ typedef struct _pb_TelemetryEvent {
 #define _pb_TelemetryEvent_DataType_MAX pb_TelemetryEvent_DataType_ENCODER
 #define _pb_TelemetryEvent_DataType_ARRAYSIZE ((pb_TelemetryEvent_DataType)(pb_TelemetryEvent_DataType_ENCODER+1))
 
+#define _pb_TelemetryEvent_Orientation_MIN pb_TelemetryEvent_Orientation_FRONT
+#define _pb_TelemetryEvent_Orientation_MAX pb_TelemetryEvent_Orientation_NONE
+#define _pb_TelemetryEvent_Orientation_ARRAYSIZE ((pb_TelemetryEvent_Orientation)(pb_TelemetryEvent_Orientation_NONE+1))
+
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 /* Initializer values for message structs */
-#define pb_TelemetryEvent_init_default           {0, 0, _pb_TelemetryEvent_DataType_MIN}
-#define pb_TelemetryEvent_init_zero              {0, 0, _pb_TelemetryEvent_DataType_MIN}
+#define pb_TelemetryEvent_init_default           {0, 0, _pb_TelemetryEvent_DataType_MIN, _pb_TelemetryEvent_Orientation_MIN}
+#define pb_TelemetryEvent_init_zero              {0, 0, _pb_TelemetryEvent_DataType_MIN, _pb_TelemetryEvent_Orientation_MIN}
 
 /* Field tags (for use in manual encoding/decoding) */
 #define pb_TelemetryEvent_timestamp_tag          1
 #define pb_TelemetryEvent_data_tag               2
 #define pb_TelemetryEvent_data_type_tag          3
+#define pb_TelemetryEvent_orientation_tag        4
 
 /* Struct field encoding specification for nanopb */
 #define pb_TelemetryEvent_FIELDLIST(X, a) \
 X(a, STATIC,   SINGULAR, INT32,    timestamp,         1) \
 X(a, STATIC,   SINGULAR, FLOAT,    data,              2) \
-X(a, STATIC,   SINGULAR, UENUM,    data_type,         3)
+X(a, STATIC,   SINGULAR, UENUM,    data_type,         3) \
+X(a, STATIC,   SINGULAR, UENUM,    orientation,       4)
 #define pb_TelemetryEvent_CALLBACK NULL
 #define pb_TelemetryEvent_DEFAULT NULL
 
@@ -60,7 +73,7 @@ extern const pb_msgdesc_t pb_TelemetryEvent_msg;
 #define pb_TelemetryEvent_fields &pb_TelemetryEvent_msg
 
 /* Maximum encoded size of messages (where known) */
-#define pb_TelemetryEvent_size                   18
+#define pb_TelemetryEvent_size                   20
 
 #ifdef __cplusplus
 } /* extern "C" */
