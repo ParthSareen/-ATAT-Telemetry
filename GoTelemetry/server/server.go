@@ -3,9 +3,10 @@ package main
 import (
 	telemetry "GoTelemetry/server/pb"
 	"flag"
-	"fmt"
+	//"fmt"
 	"github.com/golang/protobuf/proto"
 	influxdb2 "github.com/influxdata/influxdb-client-go/v2"
+	"github.com/influxdata/influxdb-client-go/v2/api"
 	uuid "github.com/satori/go.uuid"
 	"log"
 	"net"
@@ -16,7 +17,6 @@ import (
 var (
 	addr, network          string
 	dbAddr, dbUname, dbPwd string
-	//influx         influxdb2.NewClient(url, token)
 )
 
 func main() {
@@ -27,8 +27,6 @@ func main() {
 	flag.StringVar(&dbPwd, "p", "admin", "influxDB password")
 	flag.Parse()
 
-	client := influxdb2.NewClient("http://localhost:8086", "kq-DUuEgrNFdBcTbb_AaAzJ5oBSWU5cOCYcLAnHU_oZV3T-4fTIzpk6salOSvQrKnz_de0rUXZcvfs3MGtmOlw==")
-
 	ln, err := net.Listen(network, addr)
 	if err != nil {
 		log.Println(err)
@@ -37,61 +35,12 @@ func main() {
 	defer ln.Close()
 
 	log.Printf("Telemetry Service Initialized: (%s) %s\n", network, addr)
-	log.Printf("Uploading event")
-	// get non-blocking write client
-	writeAPI := client.WriteAPI("380", "380")
-	// write line protocol
-	uuid := uuid.NewV4().String()
-	log.Println(uuid)
-	tel := telemetry.TelemetryEvent{
-		Timestamp: 0,
-		UsFront:   0,
-		UsLeft:    0,
-		UsBack:    0,
-		AccelX:    0,
-		AccelY:    0,
-		AccelZ:    0,
-		GyroX:     0,
-		GyroY:     0,
-		GyroZ:     0,
-	}
-	// get non-blocking write client
-	p := influxdb2.NewPoint("stat",
-		map[string]string{"unit": "temperature"},
-		map[string]interface{}{"avg": 24.5, "max": 45},
-		time.Now())
-	// write point asynchronously
-	writeAPI.WritePoint(p)
-	// create point using fluent style
-	p = influxdb2.NewPointWithMeasurement("stat").
-		AddTag("unit", "temperature").
-		AddField("avg", 23.2).
-		AddField("max", 45).
-		SetTime(time.Now())
-	// write point asynchronously
-	writeAPI.WritePoint(p)
-	// Flush writes
-	writeAPI.Flush()
-
-	//myMeasurement,tag1=value1,tag2=value2 fieldKey="fieldValue" 1556813561098000000
-	//writeAPI.WriteRecord(fmt.Sprintf("Event,EventID=\"test\", ax=%.2f,ay=%.2f,az=%.2f,gx=%.2f,gy=%.2f,gz=%.2f,us_back=%.2f,us_left=%.2f,us_front=%.2f %d",
-	//	//uuid,
-	//	tel.AccelX,
-	//	tel.AccelY,
-	//	tel.AccelZ,
-	//	tel.GyroX,
-	//	tel.GyroY,
-	//	tel.GyroZ,
-	//	tel.UsBack,
-	//	tel.UsLeft,
-	//	tel.UsFront,
-	//	tel.Timestamp,
-	//))
-	// Close at end
-	client.Close()
-	log.Printf("Uploading event done")
 
 	for {
+		// TODO: Look into cleaning client setup code
+		client := influxdb2.NewClient("http://localhost:8086", "")
+		writeAPI := client.WriteAPI("380", "380")
+
 		conn, err := ln.Accept()
 		if err != nil {
 			log.Println(err)
@@ -99,11 +48,12 @@ func main() {
 			continue
 		}
 		log.Println("Connected to ", conn.RemoteAddr())
-		go handleConnection(conn, client)
+		go handleConnection(conn, writeAPI)
+		//client.Close()
 	}
 }
 
-func handleConnection(conn net.Conn, client influxdb2.Client) {
+func handleConnection(conn net.Conn, writeAPI api.WriteAPI) {
 	defer func() {
 		log.Println("INFO: closing connection")
 		if err := conn.Close(); err != nil {
@@ -128,12 +78,16 @@ func handleConnection(conn net.Conn, client influxdb2.Client) {
 		log.Println("failed to unmarshal:", err)
 		return
 	}
-	uuid := uuid.NewV4()
+	go handleTelemetryData(&tel, writeAPI)
 
+}
+
+func handleTelemetryData(tel *telemetry.TelemetryEvent, writeAPI api.WriteAPI) {
+	eventUuid := uuid.NewV4().String()
 	log.Println("Telemetry data:")
-	fmt.Printf("{Timestamp:%d, EventID:%d, ax: %.2f, ay:%.2f, az:%.2f, gx:%.2f, gy:%.2f, gz:%.2f, us_back:%.2f, us_left:%.2f, us_front:%.2f}\n",
+	log.Printf("{Timestamp:%d, EventID:%s, ax: %.2f, ay:%.2f, az:%.2f, gx:%.2f, gy:%.2f, gz:%.2f, us_back:%.2f, us_left:%.2f, us_front:%.2f}\n",
 		tel.Timestamp,
-		uuid,
+		eventUuid,
 		tel.AccelX,
 		tel.AccelY,
 		tel.AccelZ,
@@ -144,28 +98,16 @@ func handleConnection(conn net.Conn, client influxdb2.Client) {
 		tel.UsLeft,
 		tel.UsFront,
 	)
-
-	// get non-blocking write client
-	writeAPI := client.WriteAPI("380", "380")
-	// write line protocol
-	writeAPI.WriteRecord(fmt.Sprintf("Timestamp=%d, EventID=%d, ax= %.2f, ay=%.2f, az=%.2f, gx=%.2f, gy=%.2f, gz=%.2f, us_back=%.2f, us_left=%.2f, us_front=%.2f",
-		tel.Timestamp,
-		uuid,
-		tel.AccelX,
-		tel.AccelY,
-		tel.AccelZ,
-		tel.GyroX,
-		tel.GyroY,
-		tel.GyroZ,
-		tel.UsBack,
-		tel.UsLeft,
-		tel.UsFront,
-	))
+	p := influxdb2.NewPointWithMeasurement("Test_Event").
+		//AddTag("unit", "temperature").
+		AddField("Event ID", eventUuid).
+		AddField("US_Left", tel.UsLeft).
+		AddField("US_Front", tel.UsFront).
+		AddField("US_Back", tel.UsBack).
+		SetTime(time.Now())
+	// write point asynchronously
+	writeAPI.WritePoint(p)
 	// Flush writes
 	writeAPI.Flush()
-
-}
-
-func handleTelemetryData() {
-
+	log.Println("Uploaded event")
 }
