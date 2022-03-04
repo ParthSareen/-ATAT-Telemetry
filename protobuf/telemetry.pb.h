@@ -9,39 +9,19 @@
 #error Regenerate this file with the current version of nanopb generator.
 #endif
 
-/* Enum definitions */
-typedef enum _pb_TelemetryEvent_DataType { 
-    pb_TelemetryEvent_DataType_ULTRASONIC_ARRAY = 0, 
-    pb_TelemetryEvent_DataType_ULTRASONIC = 1, 
-    pb_TelemetryEvent_DataType_INFRARED_ARRAY = 2, 
-    pb_TelemetryEvent_DataType_INFRARED = 3, 
-    pb_TelemetryEvent_DataType_IMU = 4, 
-    pb_TelemetryEvent_DataType_ENCODER = 5 
-} pb_TelemetryEvent_DataType;
-
-typedef enum _pb_TelemetryEvent_Orientation { 
-    pb_TelemetryEvent_Orientation_FRONT = 0, 
-    pb_TelemetryEvent_Orientation_SIDE = 1, 
-    pb_TelemetryEvent_Orientation_NONE = 2 
-} pb_TelemetryEvent_Orientation;
-
 /* Struct definitions */
 typedef struct _pb_TelemetryEvent { 
     int32_t timestamp; 
-    float data; 
-    pb_TelemetryEvent_DataType data_type; 
-    pb_TelemetryEvent_Orientation orientation; 
+    float us_front; 
+    float us_left; 
+    float us_back; 
+    float accel_x; 
+    float accel_y; 
+    float accel_z; 
+    float gyro_x; 
+    float gyro_y; 
+    float gyro_z; 
 } pb_TelemetryEvent;
-
-
-/* Helper constants for enums */
-#define _pb_TelemetryEvent_DataType_MIN pb_TelemetryEvent_DataType_ULTRASONIC_ARRAY
-#define _pb_TelemetryEvent_DataType_MAX pb_TelemetryEvent_DataType_ENCODER
-#define _pb_TelemetryEvent_DataType_ARRAYSIZE ((pb_TelemetryEvent_DataType)(pb_TelemetryEvent_DataType_ENCODER+1))
-
-#define _pb_TelemetryEvent_Orientation_MIN pb_TelemetryEvent_Orientation_FRONT
-#define _pb_TelemetryEvent_Orientation_MAX pb_TelemetryEvent_Orientation_NONE
-#define _pb_TelemetryEvent_Orientation_ARRAYSIZE ((pb_TelemetryEvent_Orientation)(pb_TelemetryEvent_Orientation_NONE+1))
 
 
 #ifdef __cplusplus
@@ -49,21 +29,33 @@ extern "C" {
 #endif
 
 /* Initializer values for message structs */
-#define pb_TelemetryEvent_init_default           {0, 0, _pb_TelemetryEvent_DataType_MIN, _pb_TelemetryEvent_Orientation_MIN}
-#define pb_TelemetryEvent_init_zero              {0, 0, _pb_TelemetryEvent_DataType_MIN, _pb_TelemetryEvent_Orientation_MIN}
+#define pb_TelemetryEvent_init_default           {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+#define pb_TelemetryEvent_init_zero              {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 
 /* Field tags (for use in manual encoding/decoding) */
 #define pb_TelemetryEvent_timestamp_tag          1
-#define pb_TelemetryEvent_data_tag               2
-#define pb_TelemetryEvent_data_type_tag          3
-#define pb_TelemetryEvent_orientation_tag        4
+#define pb_TelemetryEvent_us_front_tag           2
+#define pb_TelemetryEvent_us_left_tag            3
+#define pb_TelemetryEvent_us_back_tag            4
+#define pb_TelemetryEvent_accel_x_tag            5
+#define pb_TelemetryEvent_accel_y_tag            6
+#define pb_TelemetryEvent_accel_z_tag            7
+#define pb_TelemetryEvent_gyro_x_tag             8
+#define pb_TelemetryEvent_gyro_y_tag             9
+#define pb_TelemetryEvent_gyro_z_tag             10
 
 /* Struct field encoding specification for nanopb */
 #define pb_TelemetryEvent_FIELDLIST(X, a) \
 X(a, STATIC,   SINGULAR, INT32,    timestamp,         1) \
-X(a, STATIC,   SINGULAR, FLOAT,    data,              2) \
-X(a, STATIC,   SINGULAR, UENUM,    data_type,         3) \
-X(a, STATIC,   SINGULAR, UENUM,    orientation,       4)
+X(a, STATIC,   SINGULAR, FLOAT,    us_front,          2) \
+X(a, STATIC,   SINGULAR, FLOAT,    us_left,           3) \
+X(a, STATIC,   SINGULAR, FLOAT,    us_back,           4) \
+X(a, STATIC,   SINGULAR, FLOAT,    accel_x,           5) \
+X(a, STATIC,   SINGULAR, FLOAT,    accel_y,           6) \
+X(a, STATIC,   SINGULAR, FLOAT,    accel_z,           7) \
+X(a, STATIC,   SINGULAR, FLOAT,    gyro_x,            8) \
+X(a, STATIC,   SINGULAR, FLOAT,    gyro_y,            9) \
+X(a, STATIC,   SINGULAR, FLOAT,    gyro_z,           10)
 #define pb_TelemetryEvent_CALLBACK NULL
 #define pb_TelemetryEvent_DEFAULT NULL
 
@@ -73,7 +65,7 @@ extern const pb_msgdesc_t pb_TelemetryEvent_msg;
 #define pb_TelemetryEvent_fields &pb_TelemetryEvent_msg
 
 /* Maximum encoded size of messages (where known) */
-#define pb_TelemetryEvent_size                   20
+#define pb_TelemetryEvent_size                   56
 
 #ifdef __cplusplus
 } /* extern "C" */
