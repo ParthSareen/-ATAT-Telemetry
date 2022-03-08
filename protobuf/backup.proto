@@ -1,0 +1,9 @@
+syntax = "proto3";
+package pb;
+option go_package = "./";
+
+message ReadBackup {
+  int32 read_from = 1;
+}
+
+
