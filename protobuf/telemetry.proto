@@ -4,23 +4,18 @@ option go_package = "./";
 
 message TelemetryEvent {
   int32 timestamp = 1;
-  float data = 2;
-  enum DataType {
-    ULTRASONIC_ARRAY = 0;
-    ULTRASONIC = 1;
-    INFRARED_ARRAY = 2;
-    INFRARED = 3;
-    IMU = 4;
-    ENCODER = 5;
-  }
-  // Use NONE for IMU and Encoder
-  enum Orientation {
-    FRONT = 0;
-    SIDE = 1;
-    NONE = 2;
-  }
-  DataType data_type = 3;
-  Orientation orientation = 4;
+
+  float us_front = 2;
+  float us_left = 3;
+  float us_back= 4;
+
+  float accel_x = 5;
+  float accel_y = 6;
+  float accel_z = 7;
+  
+  float gyro_x = 8;
+  float gyro_y = 9;
+  float gyro_z = 10;
 }
 
 
