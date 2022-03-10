@@ -10,9 +10,9 @@ import (
 func TestInfluxUpload(t *testing.T) {
 	tel := telemetry.TelemetryEvent{
 		Timestamp: 0,
-		UsFront:   10,
-		UsLeft:    50,
-		UsBack:    60,
+		UsFront:   5,
+		UsLeft:    20,
+		UsBack:    30,
 		AccelX:    0,
 		AccelY:    0,
 		AccelZ:    0,

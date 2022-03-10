@@ -2,8 +2,11 @@ package main
 
 import (
 	telemetry "GoTelemetry/server/pb"
+	"bufio"
 	"context"
 	"flag"
+	"strings"
+
 	//"fmt"
 	"github.com/golang/protobuf/proto"
 	influxdb2 "github.com/influxdata/influxdb-client-go/v2"
@@ -84,27 +87,93 @@ func handleConnection(conn net.Conn, client influxdb2.Client) {
 	}
 	// TODO add case to send data back
 	//if n ...
+	//handleText(conn)
 
 	var tel telemetry.TelemetryEvent
 	if err := proto.Unmarshal(buf[:n], &tel); err != nil {
 		//log.Println("failed to unmarshal:", err)
 		//return
+		log.Println("unmarshal error 1")
 		// TODO cleanup not returning error here
 	}
 	if err == nil {
-		writeAPI := client.WriteAPI("380", "380")
-		go handleTelemetryData(&tel, writeAPI, "Test_Event")
+		log.Println("tel proto read")
+		//writeAPI := client.WriteAPI("380", "380")
+		//go handleTelemetryData(&tel, writeAPI, "Test_Event")
+		return
 
 	}
 
 	var backup telemetry.ReadBackup
 	if err := proto.Unmarshal(buf[:n], &backup); err != nil {
-		log.Println("failed to unmarshal:", err)
-		return
+		//log.Println("failed to unmarshal:", err)
+		//return
+		log.Println("Error on unmarshal backup")
 	}
 
-	go getInfluxData(&backup, client)
+	//go getInfluxData(&backup, client)
+	if err == nil {
+		log.Println("Backup proto read")
+		go handleReadBackup(conn, &backup, client)
+	}
 
+}
+
+func handleText(conn net.Conn) {
+	//defer conn.Close()
+	s := bufio.NewScanner(conn)
+
+	for s.Scan() {
+
+		data := s.Text()
+		log.Println(data)
+		if data == "" {
+			conn.Write([]byte(">"))
+			continue
+		}
+
+		if data == "exit" {
+			return
+		}
+
+		handleCommandText(data, conn)
+	}
+}
+
+func handleCommandText(inp string, conn net.Conn) {
+	var InvalidCommand = []byte("Invalid Command")
+	str := strings.Split(inp, " ")
+
+	if len(str) <= 0 {
+		conn.Write(InvalidCommand)
+		return
+	}
+	temp := telemetry.TelemetryEvent{
+		Timestamp: 123,
+		UsFront:   12344,
+		UsLeft:    0,
+		UsBack:    0,
+		AccelX:    0,
+		AccelY:    0,
+		AccelZ:    0,
+		GyroX:     0,
+		GyroY:     0,
+		GyroZ:     0,
+	}
+	command := str[0]
+
+	switch command {
+
+	case "GET":
+		tempProto, _ := proto.Marshal(&temp)
+		conn.Write(tempProto)
+	case "SET":
+		conn.Write([]byte("test"))
+	default:
+		conn.Write(InvalidCommand)
+	}
+
+	conn.Write([]byte("\n>"))
 }
 
 func handleTelemetryData(tel *telemetry.TelemetryEvent, writeAPI api.WriteAPI, measurement string) {
@@ -125,6 +194,7 @@ func handleTelemetryData(tel *telemetry.TelemetryEvent, writeAPI api.WriteAPI, m
 	)
 	p := influxdb2.NewPointWithMeasurement(measurement).
 		//AddTag("unit", "temperature").
+		// TODO add more fields
 		AddField("Event ID", eventUuid).
 		AddField("US_Left", tel.UsLeft).
 		AddField("US_Front", tel.UsFront).
@@ -143,7 +213,47 @@ func handleTelemetryData(tel *telemetry.TelemetryEvent, writeAPI api.WriteAPI, m
 	log.Println("Uploaded event")
 }
 
-func getInfluxData(backup *telemetry.ReadBackup, client influxdb2.Client) {
+func handleReadBackup(conn net.Conn, backup *telemetry.ReadBackup, client influxdb2.Client) {
+	defer func(conn net.Conn) {
+		err := conn.Close()
+		if err != nil {
+			log.Panic(err)
+		}
+	}(conn)
+
+	//results := getInfluxData(backup, client)
+
+	//for resultType, result := range results {
+	//	log.Println(resultType, result)
+	//	_, err := conn.Write([]byte("return ok"))
+	//	if err != nil {
+	//		return
+	//	}
+	//}
+	tel := telemetry.TelemetryEvent{
+		Timestamp: 0,
+		UsFront:   0,
+		UsLeft:    44,
+		UsBack:    0,
+		AccelX:    0,
+		AccelY:    0,
+		AccelZ:    0,
+		GyroX:     0,
+		GyroY:     0,
+		GyroZ:     0,
+	}
+	tempProto, err := proto.Marshal(&tel)
+	if err != nil {
+		panic(err)
+	}
+	log.Println("writing")
+	//conn.Write([]byte("hi"))
+	conn.Write(tempProto)
+	log.Println("written")
+
+}
+
+func getInfluxData(backup *telemetry.ReadBackup, client influxdb2.Client) map[string]float64 {
 	// TODO return a collection of data from here
 	//s := string(backup.ReadFrom)
 	// Get query client
@@ -151,25 +261,38 @@ func getInfluxData(backup *telemetry.ReadBackup, client influxdb2.Client) {
 	queries := make(map[string]string)
 
 	queries["US_Back"] = `from(bucket:"380")|> range(start: -1m) |> filter(fn: (r) => r._measurement == "Influx_Test_Event") |> filter(fn: (r) => r._field == "US_Back") |> last()`
-	//query_us_front := `from(bucket:"380")|> range(start: -%sm) |> filter(fn: (r) => r._measurement == "Influx_Test_Event") |> filter(fn: (r) => r._field == "US_Front")`
-	results := make(map[string]string)
+	queries["US_Front"] = `from(bucket:"380")|> range(start: -1m) |> filter(fn: (r) => r._measurement == "Influx_Test_Event") |> filter(fn: (r) => r._field == "US_Front") |> last()`
+	queries["US_Left"] = `from(bucket:"380")|> range(start: -1m) |> filter(fn: (r) => r._measurement == "Influx_Test_Event") |> filter(fn: (r) => r._field == "US_Left") |> last()`
+
+	results := make(map[string]float64)
 	// get QueryTableResult
 	for queryType, query := range queries {
+		log.Println(queryType)
 		result, err := queryAPI.Query(context.Background(), query)
 		if err != nil {
 			panic(err)
 		}
 
-		// Iterate over query response
+		// Iterate over query response TODO cleanup this as there is always only one response
 		for result.Next() {
 			// Notice when group key has changed
-			if result.TableChanged() {
-				log.Printf("table: %s\n", result.TableMetadata().String())
-			}
+			//if result.TableChanged() {
+			//	log.Printf("table: %s\n", result.TableMetadata().String())
+			//}
 			// Access data
-			log.Printf("value: %v\n", result.Record().Value())
+			//log.Printf("value: %v\n", result.Record().Value())
+		}
+		log.Printf("%s: %v\n", queryType, result.Record().Value())
+		// TODO refactor
+		switch i := result.Record().Value().(type) {
+		case float64:
+			results[queryType] = i
+		default:
+			// Type panic
+			panic(i)
 		}
 	}
+	return results
 
 	// check for an error
 	//if result.Err() != nil {
