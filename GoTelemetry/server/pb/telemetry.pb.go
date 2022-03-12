@@ -20,21 +20,192 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// Shitty way to do switch since we don't have gRPC big sad
+type TelemetryEvent_Telemetry_Command int32
+
+const (
+	TelemetryEvent_CMD_ULTRASONIC   TelemetryEvent_Telemetry_Command = 0
+	TelemetryEvent_CMD_ACCELERATION TelemetryEvent_Telemetry_Command = 1
+	TelemetryEvent_CMD_GYRO         TelemetryEvent_Telemetry_Command = 2
+	TelemetryEvent_CMD_LOCATION     TelemetryEvent_Telemetry_Command = 3
+	TelemetryEvent_CMD_MOTOR_SPEED  TelemetryEvent_Telemetry_Command = 4
+	TelemetryEvent_CMD_ENCODER      TelemetryEvent_Telemetry_Command = 5
+	TelemetryEvent_CMD_ORIENTATION  TelemetryEvent_Telemetry_Command = 6
+	TelemetryEvent_CMD_SHUTDOWN     TelemetryEvent_Telemetry_Command = 7
+	TelemetryEvent_CMD_READ_DATA    TelemetryEvent_Telemetry_Command = 8
+)
+
+// Enum value maps for TelemetryEvent_Telemetry_Command.
+var (
+	TelemetryEvent_Telemetry_Command_name = map[int32]string{
+		0: "CMD_ULTRASONIC",
+		1: "CMD_ACCELERATION",
+		2: "CMD_GYRO",
+		3: "CMD_LOCATION",
+		4: "CMD_MOTOR_SPEED",
+		5: "CMD_ENCODER",
+		6: "CMD_ORIENTATION",
+		7: "CMD_SHUTDOWN",
+		8: "CMD_READ_DATA",
+	}
+	TelemetryEvent_Telemetry_Command_value = map[string]int32{
+		"CMD_ULTRASONIC":   0,
+		"CMD_ACCELERATION": 1,
+		"CMD_GYRO":         2,
+		"CMD_LOCATION":     3,
+		"CMD_MOTOR_SPEED":  4,
+		"CMD_ENCODER":      5,
+		"CMD_ORIENTATION":  6,
+		"CMD_SHUTDOWN":     7,
+		"CMD_READ_DATA":    8,
+	}
+)
+
+func (x TelemetryEvent_Telemetry_Command) Enum() *TelemetryEvent_Telemetry_Command {
+	p := new(TelemetryEvent_Telemetry_Command)
+	*p = x
+	return p
+}
+
+func (x TelemetryEvent_Telemetry_Command) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (TelemetryEvent_Telemetry_Command) Descriptor() protoreflect.EnumDescriptor {
+	return file_telemetry_proto_enumTypes[0].Descriptor()
+}
+
+func (TelemetryEvent_Telemetry_Command) Type() protoreflect.EnumType {
+	return &file_telemetry_proto_enumTypes[0]
+}
+
+func (x TelemetryEvent_Telemetry_Command) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use TelemetryEvent_Telemetry_Command.Descriptor instead.
+func (TelemetryEvent_Telemetry_Command) EnumDescriptor() ([]byte, []int) {
+	return file_telemetry_proto_rawDescGZIP(), []int{0, 0}
+}
+
+type TelemetryEvent_Motor_Speed int32
+
+const (
+	TelemetryEvent_ACCELERATION TelemetryEvent_Motor_Speed = 0
+	TelemetryEvent_CONST_SPEED  TelemetryEvent_Motor_Speed = 1
+	TelemetryEvent_TURNING      TelemetryEvent_Motor_Speed = 2
+	TelemetryEvent_STOPPED      TelemetryEvent_Motor_Speed = 3
+)
+
+// Enum value maps for TelemetryEvent_Motor_Speed.
+var (
+	TelemetryEvent_Motor_Speed_name = map[int32]string{
+		0: "ACCELERATION",
+		1: "CONST_SPEED",
+		2: "TURNING",
+		3: "STOPPED",
+	}
+	TelemetryEvent_Motor_Speed_value = map[string]int32{
+		"ACCELERATION": 0,
+		"CONST_SPEED":  1,
+		"TURNING":      2,
+		"STOPPED":      3,
+	}
+)
+
+func (x TelemetryEvent_Motor_Speed) Enum() *TelemetryEvent_Motor_Speed {
+	p := new(TelemetryEvent_Motor_Speed)
+	*p = x
+	return p
+}
+
+func (x TelemetryEvent_Motor_Speed) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (TelemetryEvent_Motor_Speed) Descriptor() protoreflect.EnumDescriptor {
+	return file_telemetry_proto_enumTypes[1].Descriptor()
+}
+
+func (TelemetryEvent_Motor_Speed) Type() protoreflect.EnumType {
+	return &file_telemetry_proto_enumTypes[1]
+}
+
+func (x TelemetryEvent_Motor_Speed) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use TelemetryEvent_Motor_Speed.Descriptor instead.
+func (TelemetryEvent_Motor_Speed) EnumDescriptor() ([]byte, []int) {
+	return file_telemetry_proto_rawDescGZIP(), []int{0, 1}
+}
+
+type TelemetryEvent_Orientation int32
+
+const (
+	TelemetryEvent_UP    TelemetryEvent_Orientation = 0
+	TelemetryEvent_DOWN  TelemetryEvent_Orientation = 1
+	TelemetryEvent_LEFT  TelemetryEvent_Orientation = 2
+	TelemetryEvent_RIGHT TelemetryEvent_Orientation = 3
+)
+
+// Enum value maps for TelemetryEvent_Orientation.
+var (
+	TelemetryEvent_Orientation_name = map[int32]string{
+		0: "UP",
+		1: "DOWN",
+		2: "LEFT",
+		3: "RIGHT",
+	}
+	TelemetryEvent_Orientation_value = map[string]int32{
+		"UP":    0,
+		"DOWN":  1,
+		"LEFT":  2,
+		"RIGHT": 3,
+	}
+)
+
+func (x TelemetryEvent_Orientation) Enum() *TelemetryEvent_Orientation {
+	p := new(TelemetryEvent_Orientation)
+	*p = x
+	return p
+}
+
+func (x TelemetryEvent_Orientation) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (TelemetryEvent_Orientation) Descriptor() protoreflect.EnumDescriptor {
+	return file_telemetry_proto_enumTypes[2].Descriptor()
+}
+
+func (TelemetryEvent_Orientation) Type() protoreflect.EnumType {
+	return &file_telemetry_proto_enumTypes[2]
+}
+
+func (x TelemetryEvent_Orientation) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use TelemetryEvent_Orientation.Descriptor instead.
+func (TelemetryEvent_Orientation) EnumDescriptor() ([]byte, []int) {
+	return file_telemetry_proto_rawDescGZIP(), []int{0, 2}
+}
+
 type TelemetryEvent struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Timestamp int32   `protobuf:"varint,1,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
-	UsFront   float32 `protobuf:"fixed32,2,opt,name=us_front,json=usFront,proto3" json:"us_front,omitempty"`
-	UsLeft    float32 `protobuf:"fixed32,3,opt,name=us_left,json=usLeft,proto3" json:"us_left,omitempty"`
-	UsBack    float32 `protobuf:"fixed32,4,opt,name=us_back,json=usBack,proto3" json:"us_back,omitempty"`
-	AccelX    float32 `protobuf:"fixed32,5,opt,name=accel_x,json=accelX,proto3" json:"accel_x,omitempty"`
-	AccelY    float32 `protobuf:"fixed32,6,opt,name=accel_y,json=accelY,proto3" json:"accel_y,omitempty"`
-	AccelZ    float32 `protobuf:"fixed32,7,opt,name=accel_z,json=accelZ,proto3" json:"accel_z,omitempty"`
-	GyroX     float32 `protobuf:"fixed32,8,opt,name=gyro_x,json=gyroX,proto3" json:"gyro_x,omitempty"`
-	GyroY     float32 `protobuf:"fixed32,9,opt,name=gyro_y,json=gyroY,proto3" json:"gyro_y,omitempty"`
-	GyroZ     float32 `protobuf:"fixed32,10,opt,name=gyro_z,json=gyroZ,proto3" json:"gyro_z,omitempty"`
+	TelUs            *TelemetryEvent_Telemetry_Ultrasonic  `protobuf:"bytes,1,opt,name=tel_us,json=telUs,proto3" json:"tel_us,omitempty"`
+	TelAcc           *TelemetryEvent_Telemetry_Accel       `protobuf:"bytes,2,opt,name=tel_acc,json=telAcc,proto3" json:"tel_acc,omitempty"`
+	TelGyro          *TelemetryEvent_Telemetry_Gyro        `protobuf:"bytes,3,opt,name=tel_gyro,json=telGyro,proto3" json:"tel_gyro,omitempty"`
+	TelEnc           *TelemetryEvent_Telemetry_Encoder     `protobuf:"bytes,4,opt,name=tel_enc,json=telEnc,proto3" json:"tel_enc,omitempty"`
+	TelLoc           *TelemetryEvent_Telemetry_Location    `protobuf:"bytes,5,opt,name=tel_loc,json=telLoc,proto3" json:"tel_loc,omitempty"`
+	TelMotorSpeed    *TelemetryEvent_Telemetry_Motor_Speed `protobuf:"bytes,6,opt,name=tel_motor_speed,json=telMotorSpeed,proto3" json:"tel_motor_speed,omitempty"`
+	TelOrientation   *TelemetryEvent_Telemetry_Orientation `protobuf:"bytes,7,opt,name=tel_orientation,json=telOrientation,proto3" json:"tel_orientation,omitempty"`
+	TelCmd           TelemetryEvent_Telemetry_Command      `protobuf:"varint,8,opt,name=tel_cmd,json=telCmd,proto3,enum=pb.TelemetryEvent_Telemetry_Command" json:"tel_cmd,omitempty"`
+	ImproperShutdown bool                                  `protobuf:"varint,9,opt,name=improper_shutdown,json=improperShutdown,proto3" json:"improper_shutdown,omitempty"`
 }
 
 func (x *TelemetryEvent) Reset() {
@@ -69,99 +240,574 @@ func (*TelemetryEvent) Descriptor() ([]byte, []int) {
 	return file_telemetry_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *TelemetryEvent) GetTimestamp() int32 {
+func (x *TelemetryEvent) GetTelUs() *TelemetryEvent_Telemetry_Ultrasonic {
 	if x != nil {
-		return x.Timestamp
+		return x.TelUs
 	}
-	return 0
+	return nil
 }
 
-func (x *TelemetryEvent) GetUsFront() float32 {
+func (x *TelemetryEvent) GetTelAcc() *TelemetryEvent_Telemetry_Accel {
+	if x != nil {
+		return x.TelAcc
+	}
+	return nil
+}
+
+func (x *TelemetryEvent) GetTelGyro() *TelemetryEvent_Telemetry_Gyro {
+	if x != nil {
+		return x.TelGyro
+	}
+	return nil
+}
+
+func (x *TelemetryEvent) GetTelEnc() *TelemetryEvent_Telemetry_Encoder {
+	if x != nil {
+		return x.TelEnc
+	}
+	return nil
+}
+
+func (x *TelemetryEvent) GetTelLoc() *TelemetryEvent_Telemetry_Location {
+	if x != nil {
+		return x.TelLoc
+	}
+	return nil
+}
+
+func (x *TelemetryEvent) GetTelMotorSpeed() *TelemetryEvent_Telemetry_Motor_Speed {
+	if x != nil {
+		return x.TelMotorSpeed
+	}
+	return nil
+}
+
+func (x *TelemetryEvent) GetTelOrientation() *TelemetryEvent_Telemetry_Orientation {
+	if x != nil {
+		return x.TelOrientation
+	}
+	return nil
+}
+
+func (x *TelemetryEvent) GetTelCmd() TelemetryEvent_Telemetry_Command {
+	if x != nil {
+		return x.TelCmd
+	}
+	return TelemetryEvent_CMD_ULTRASONIC
+}
+
+func (x *TelemetryEvent) GetImproperShutdown() bool {
+	if x != nil {
+		return x.ImproperShutdown
+	}
+	return false
+}
+
+// Nested messages
+type TelemetryEvent_Telemetry_Ultrasonic struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	UsFront float32 `protobuf:"fixed32,1,opt,name=us_front,json=usFront,proto3" json:"us_front,omitempty"`
+	UsLeft  float32 `protobuf:"fixed32,2,opt,name=us_left,json=usLeft,proto3" json:"us_left,omitempty"`
+	UsBack  float32 `protobuf:"fixed32,3,opt,name=us_back,json=usBack,proto3" json:"us_back,omitempty"`
+}
+
+func (x *TelemetryEvent_Telemetry_Ultrasonic) Reset() {
+	*x = TelemetryEvent_Telemetry_Ultrasonic{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_telemetry_proto_msgTypes[1]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TelemetryEvent_Telemetry_Ultrasonic) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TelemetryEvent_Telemetry_Ultrasonic) ProtoMessage() {}
+
+func (x *TelemetryEvent_Telemetry_Ultrasonic) ProtoReflect() protoreflect.Message {
+	mi := &file_telemetry_proto_msgTypes[1]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TelemetryEvent_Telemetry_Ultrasonic.ProtoReflect.Descriptor instead.
+func (*TelemetryEvent_Telemetry_Ultrasonic) Descriptor() ([]byte, []int) {
+	return file_telemetry_proto_rawDescGZIP(), []int{0, 0}
+}
+
+func (x *TelemetryEvent_Telemetry_Ultrasonic) GetUsFront() float32 {
 	if x != nil {
 		return x.UsFront
 	}
 	return 0
 }
 
-func (x *TelemetryEvent) GetUsLeft() float32 {
+func (x *TelemetryEvent_Telemetry_Ultrasonic) GetUsLeft() float32 {
 	if x != nil {
 		return x.UsLeft
 	}
 	return 0
 }
 
-func (x *TelemetryEvent) GetUsBack() float32 {
+func (x *TelemetryEvent_Telemetry_Ultrasonic) GetUsBack() float32 {
 	if x != nil {
 		return x.UsBack
 	}
 	return 0
 }
 
-func (x *TelemetryEvent) GetAccelX() float32 {
+type TelemetryEvent_Telemetry_Accel struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	AccelX float32 `protobuf:"fixed32,1,opt,name=accel_x,json=accelX,proto3" json:"accel_x,omitempty"`
+	AccelY float32 `protobuf:"fixed32,2,opt,name=accel_y,json=accelY,proto3" json:"accel_y,omitempty"`
+	AccelZ float32 `protobuf:"fixed32,3,opt,name=accel_z,json=accelZ,proto3" json:"accel_z,omitempty"`
+}
+
+func (x *TelemetryEvent_Telemetry_Accel) Reset() {
+	*x = TelemetryEvent_Telemetry_Accel{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_telemetry_proto_msgTypes[2]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TelemetryEvent_Telemetry_Accel) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TelemetryEvent_Telemetry_Accel) ProtoMessage() {}
+
+func (x *TelemetryEvent_Telemetry_Accel) ProtoReflect() protoreflect.Message {
+	mi := &file_telemetry_proto_msgTypes[2]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TelemetryEvent_Telemetry_Accel.ProtoReflect.Descriptor instead.
+func (*TelemetryEvent_Telemetry_Accel) Descriptor() ([]byte, []int) {
+	return file_telemetry_proto_rawDescGZIP(), []int{0, 1}
+}
+
+func (x *TelemetryEvent_Telemetry_Accel) GetAccelX() float32 {
 	if x != nil {
 		return x.AccelX
 	}
 	return 0
 }
 
-func (x *TelemetryEvent) GetAccelY() float32 {
+func (x *TelemetryEvent_Telemetry_Accel) GetAccelY() float32 {
 	if x != nil {
 		return x.AccelY
 	}
 	return 0
 }
 
-func (x *TelemetryEvent) GetAccelZ() float32 {
+func (x *TelemetryEvent_Telemetry_Accel) GetAccelZ() float32 {
 	if x != nil {
 		return x.AccelZ
 	}
 	return 0
 }
 
-func (x *TelemetryEvent) GetGyroX() float32 {
+type TelemetryEvent_Telemetry_Gyro struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	GyroX float32 `protobuf:"fixed32,1,opt,name=gyro_x,json=gyroX,proto3" json:"gyro_x,omitempty"`
+	GyroY float32 `protobuf:"fixed32,2,opt,name=gyro_y,json=gyroY,proto3" json:"gyro_y,omitempty"`
+	GyroZ float32 `protobuf:"fixed32,3,opt,name=gyro_z,json=gyroZ,proto3" json:"gyro_z,omitempty"`
+}
+
+func (x *TelemetryEvent_Telemetry_Gyro) Reset() {
+	*x = TelemetryEvent_Telemetry_Gyro{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_telemetry_proto_msgTypes[3]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TelemetryEvent_Telemetry_Gyro) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TelemetryEvent_Telemetry_Gyro) ProtoMessage() {}
+
+func (x *TelemetryEvent_Telemetry_Gyro) ProtoReflect() protoreflect.Message {
+	mi := &file_telemetry_proto_msgTypes[3]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TelemetryEvent_Telemetry_Gyro.ProtoReflect.Descriptor instead.
+func (*TelemetryEvent_Telemetry_Gyro) Descriptor() ([]byte, []int) {
+	return file_telemetry_proto_rawDescGZIP(), []int{0, 2}
+}
+
+func (x *TelemetryEvent_Telemetry_Gyro) GetGyroX() float32 {
 	if x != nil {
 		return x.GyroX
 	}
 	return 0
 }
 
-func (x *TelemetryEvent) GetGyroY() float32 {
+func (x *TelemetryEvent_Telemetry_Gyro) GetGyroY() float32 {
 	if x != nil {
 		return x.GyroY
 	}
 	return 0
 }
 
-func (x *TelemetryEvent) GetGyroZ() float32 {
+func (x *TelemetryEvent_Telemetry_Gyro) GetGyroZ() float32 {
 	if x != nil {
 		return x.GyroZ
 	}
 	return 0
 }
 
+type TelemetryEvent_Telemetry_Location struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Rows uint32  `protobuf:"varint,1,opt,name=rows,proto3" json:"rows,omitempty"`
+	Cols uint32  `protobuf:"varint,2,opt,name=cols,proto3" json:"cols,omitempty"`
+	Data []int32 `protobuf:"varint,3,rep,packed,name=data,proto3" json:"data,omitempty"`
+}
+
+func (x *TelemetryEvent_Telemetry_Location) Reset() {
+	*x = TelemetryEvent_Telemetry_Location{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_telemetry_proto_msgTypes[4]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TelemetryEvent_Telemetry_Location) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TelemetryEvent_Telemetry_Location) ProtoMessage() {}
+
+func (x *TelemetryEvent_Telemetry_Location) ProtoReflect() protoreflect.Message {
+	mi := &file_telemetry_proto_msgTypes[4]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TelemetryEvent_Telemetry_Location.ProtoReflect.Descriptor instead.
+func (*TelemetryEvent_Telemetry_Location) Descriptor() ([]byte, []int) {
+	return file_telemetry_proto_rawDescGZIP(), []int{0, 3}
+}
+
+func (x *TelemetryEvent_Telemetry_Location) GetRows() uint32 {
+	if x != nil {
+		return x.Rows
+	}
+	return 0
+}
+
+func (x *TelemetryEvent_Telemetry_Location) GetCols() uint32 {
+	if x != nil {
+		return x.Cols
+	}
+	return 0
+}
+
+func (x *TelemetryEvent_Telemetry_Location) GetData() []int32 {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+type TelemetryEvent_Telemetry_Motor_Speed struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	MotorSpeed TelemetryEvent_Motor_Speed `protobuf:"varint,1,opt,name=motorSpeed,proto3,enum=pb.TelemetryEvent_Motor_Speed" json:"motorSpeed,omitempty"`
+}
+
+func (x *TelemetryEvent_Telemetry_Motor_Speed) Reset() {
+	*x = TelemetryEvent_Telemetry_Motor_Speed{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_telemetry_proto_msgTypes[5]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TelemetryEvent_Telemetry_Motor_Speed) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TelemetryEvent_Telemetry_Motor_Speed) ProtoMessage() {}
+
+func (x *TelemetryEvent_Telemetry_Motor_Speed) ProtoReflect() protoreflect.Message {
+	mi := &file_telemetry_proto_msgTypes[5]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TelemetryEvent_Telemetry_Motor_Speed.ProtoReflect.Descriptor instead.
+func (*TelemetryEvent_Telemetry_Motor_Speed) Descriptor() ([]byte, []int) {
+	return file_telemetry_proto_rawDescGZIP(), []int{0, 4}
+}
+
+func (x *TelemetryEvent_Telemetry_Motor_Speed) GetMotorSpeed() TelemetryEvent_Motor_Speed {
+	if x != nil {
+		return x.MotorSpeed
+	}
+	return TelemetryEvent_ACCELERATION
+}
+
+type TelemetryEvent_Telemetry_Encoder struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	LeftMotor  float32 `protobuf:"fixed32,1,opt,name=leftMotor,proto3" json:"leftMotor,omitempty"`
+	RightMotor float32 `protobuf:"fixed32,2,opt,name=rightMotor,proto3" json:"rightMotor,omitempty"`
+}
+
+func (x *TelemetryEvent_Telemetry_Encoder) Reset() {
+	*x = TelemetryEvent_Telemetry_Encoder{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_telemetry_proto_msgTypes[6]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TelemetryEvent_Telemetry_Encoder) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TelemetryEvent_Telemetry_Encoder) ProtoMessage() {}
+
+func (x *TelemetryEvent_Telemetry_Encoder) ProtoReflect() protoreflect.Message {
+	mi := &file_telemetry_proto_msgTypes[6]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TelemetryEvent_Telemetry_Encoder.ProtoReflect.Descriptor instead.
+func (*TelemetryEvent_Telemetry_Encoder) Descriptor() ([]byte, []int) {
+	return file_telemetry_proto_rawDescGZIP(), []int{0, 5}
+}
+
+func (x *TelemetryEvent_Telemetry_Encoder) GetLeftMotor() float32 {
+	if x != nil {
+		return x.LeftMotor
+	}
+	return 0
+}
+
+func (x *TelemetryEvent_Telemetry_Encoder) GetRightMotor() float32 {
+	if x != nil {
+		return x.RightMotor
+	}
+	return 0
+}
+
+type TelemetryEvent_Telemetry_Orientation struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Orientation TelemetryEvent_Orientation `protobuf:"varint,1,opt,name=orientation,proto3,enum=pb.TelemetryEvent_Orientation" json:"orientation,omitempty"`
+}
+
+func (x *TelemetryEvent_Telemetry_Orientation) Reset() {
+	*x = TelemetryEvent_Telemetry_Orientation{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_telemetry_proto_msgTypes[7]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TelemetryEvent_Telemetry_Orientation) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TelemetryEvent_Telemetry_Orientation) ProtoMessage() {}
+
+func (x *TelemetryEvent_Telemetry_Orientation) ProtoReflect() protoreflect.Message {
+	mi := &file_telemetry_proto_msgTypes[7]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TelemetryEvent_Telemetry_Orientation.ProtoReflect.Descriptor instead.
+func (*TelemetryEvent_Telemetry_Orientation) Descriptor() ([]byte, []int) {
+	return file_telemetry_proto_rawDescGZIP(), []int{0, 6}
+}
+
+func (x *TelemetryEvent_Telemetry_Orientation) GetOrientation() TelemetryEvent_Orientation {
+	if x != nil {
+		return x.Orientation
+	}
+	return TelemetryEvent_UP
+}
+
 var File_telemetry_proto protoreflect.FileDescriptor
 
 var file_telemetry_proto_rawDesc = []byte{
 	0x0a, 0x0f, 0x74, 0x65, 0x6c, 0x65, 0x6d, 0x65, 0x74, 0x72, 0x79, 0x2e, 0x70, 0x72, 0x6f, 0x74,
-	0x6f, 0x12, 0x02, 0x70, 0x62, 0x22, 0x8b, 0x02, 0x0a, 0x0e, 0x54, 0x65, 0x6c, 0x65, 0x6d, 0x65,
-	0x74, 0x72, 0x79, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x74, 0x69, 0x6d, 0x65,
-	0x73, 0x74, 0x61, 0x6d, 0x70, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x09, 0x74, 0x69, 0x6d,
-	0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x12, 0x19, 0x0a, 0x08, 0x75, 0x73, 0x5f, 0x66, 0x72, 0x6f,
-	0x6e, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x02, 0x52, 0x07, 0x75, 0x73, 0x46, 0x72, 0x6f, 0x6e,
-	0x74, 0x12, 0x17, 0x0a, 0x07, 0x75, 0x73, 0x5f, 0x6c, 0x65, 0x66, 0x74, 0x18, 0x03, 0x20, 0x01,
-	0x28, 0x02, 0x52, 0x06, 0x75, 0x73, 0x4c, 0x65, 0x66, 0x74, 0x12, 0x17, 0x0a, 0x07, 0x75, 0x73,
-	0x5f, 0x62, 0x61, 0x63, 0x6b, 0x18, 0x04, 0x20, 0x01, 0x28, 0x02, 0x52, 0x06, 0x75, 0x73, 0x42,
-	0x61, 0x63, 0x6b, 0x12, 0x17, 0x0a, 0x07, 0x61, 0x63, 0x63, 0x65, 0x6c, 0x5f, 0x78, 0x18, 0x05,
-	0x20, 0x01, 0x28, 0x02, 0x52, 0x06, 0x61, 0x63, 0x63, 0x65, 0x6c, 0x58, 0x12, 0x17, 0x0a, 0x07,
-	0x61, 0x63, 0x63, 0x65, 0x6c, 0x5f, 0x79, 0x18, 0x06, 0x20, 0x01, 0x28, 0x02, 0x52, 0x06, 0x61,
-	0x63, 0x63, 0x65, 0x6c, 0x59, 0x12, 0x17, 0x0a, 0x07, 0x61, 0x63, 0x63, 0x65, 0x6c, 0x5f, 0x7a,
-	0x18, 0x07, 0x20, 0x01, 0x28, 0x02, 0x52, 0x06, 0x61, 0x63, 0x63, 0x65, 0x6c, 0x5a, 0x12, 0x15,
-	0x0a, 0x06, 0x67, 0x79, 0x72, 0x6f, 0x5f, 0x78, 0x18, 0x08, 0x20, 0x01, 0x28, 0x02, 0x52, 0x05,
-	0x67, 0x79, 0x72, 0x6f, 0x58, 0x12, 0x15, 0x0a, 0x06, 0x67, 0x79, 0x72, 0x6f, 0x5f, 0x79, 0x18,
-	0x09, 0x20, 0x01, 0x28, 0x02, 0x52, 0x05, 0x67, 0x79, 0x72, 0x6f, 0x59, 0x12, 0x15, 0x0a, 0x06,
-	0x67, 0x79, 0x72, 0x6f, 0x5f, 0x7a, 0x18, 0x0a, 0x20, 0x01, 0x28, 0x02, 0x52, 0x05, 0x67, 0x79,
-	0x72, 0x6f, 0x5a, 0x42, 0x04, 0x5a, 0x02, 0x2e, 0x2f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f,
-	0x33,
+	0x6f, 0x12, 0x02, 0x70, 0x62, 0x22, 0x94, 0x0c, 0x0a, 0x0e, 0x54, 0x65, 0x6c, 0x65, 0x6d, 0x65,
+	0x74, 0x72, 0x79, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x12, 0x3e, 0x0a, 0x06, 0x74, 0x65, 0x6c, 0x5f,
+	0x75, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x27, 0x2e, 0x70, 0x62, 0x2e, 0x54, 0x65,
+	0x6c, 0x65, 0x6d, 0x65, 0x74, 0x72, 0x79, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x2e, 0x54, 0x65, 0x6c,
+	0x65, 0x6d, 0x65, 0x74, 0x72, 0x79, 0x5f, 0x55, 0x6c, 0x74, 0x72, 0x61, 0x73, 0x6f, 0x6e, 0x69,
+	0x63, 0x52, 0x05, 0x74, 0x65, 0x6c, 0x55, 0x73, 0x12, 0x3b, 0x0a, 0x07, 0x74, 0x65, 0x6c, 0x5f,
+	0x61, 0x63, 0x63, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x22, 0x2e, 0x70, 0x62, 0x2e, 0x54,
+	0x65, 0x6c, 0x65, 0x6d, 0x65, 0x74, 0x72, 0x79, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x2e, 0x54, 0x65,
+	0x6c, 0x65, 0x6d, 0x65, 0x74, 0x72, 0x79, 0x5f, 0x41, 0x63, 0x63, 0x65, 0x6c, 0x52, 0x06, 0x74,
+	0x65, 0x6c, 0x41, 0x63, 0x63, 0x12, 0x3c, 0x0a, 0x08, 0x74, 0x65, 0x6c, 0x5f, 0x67, 0x79, 0x72,
+	0x6f, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x21, 0x2e, 0x70, 0x62, 0x2e, 0x54, 0x65, 0x6c,
+	0x65, 0x6d, 0x65, 0x74, 0x72, 0x79, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x2e, 0x54, 0x65, 0x6c, 0x65,
+	0x6d, 0x65, 0x74, 0x72, 0x79, 0x5f, 0x47, 0x79, 0x72, 0x6f, 0x52, 0x07, 0x74, 0x65, 0x6c, 0x47,
+	0x79, 0x72, 0x6f, 0x12, 0x3d, 0x0a, 0x07, 0x74, 0x65, 0x6c, 0x5f, 0x65, 0x6e, 0x63, 0x18, 0x04,
+	0x20, 0x01, 0x28, 0x0b, 0x32, 0x24, 0x2e, 0x70, 0x62, 0x2e, 0x54, 0x65, 0x6c, 0x65, 0x6d, 0x65,
+	0x74, 0x72, 0x79, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x2e, 0x54, 0x65, 0x6c, 0x65, 0x6d, 0x65, 0x74,
+	0x72, 0x79, 0x5f, 0x45, 0x6e, 0x63, 0x6f, 0x64, 0x65, 0x72, 0x52, 0x06, 0x74, 0x65, 0x6c, 0x45,
+	0x6e, 0x63, 0x12, 0x3e, 0x0a, 0x07, 0x74, 0x65, 0x6c, 0x5f, 0x6c, 0x6f, 0x63, 0x18, 0x05, 0x20,
+	0x01, 0x28, 0x0b, 0x32, 0x25, 0x2e, 0x70, 0x62, 0x2e, 0x54, 0x65, 0x6c, 0x65, 0x6d, 0x65, 0x74,
+	0x72, 0x79, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x2e, 0x54, 0x65, 0x6c, 0x65, 0x6d, 0x65, 0x74, 0x72,
+	0x79, 0x5f, 0x4c, 0x6f, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x06, 0x74, 0x65, 0x6c, 0x4c,
+	0x6f, 0x63, 0x12, 0x50, 0x0a, 0x0f, 0x74, 0x65, 0x6c, 0x5f, 0x6d, 0x6f, 0x74, 0x6f, 0x72, 0x5f,
+	0x73, 0x70, 0x65, 0x65, 0x64, 0x18, 0x06, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x28, 0x2e, 0x70, 0x62,
+	0x2e, 0x54, 0x65, 0x6c, 0x65, 0x6d, 0x65, 0x74, 0x72, 0x79, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x2e,
+	0x54, 0x65, 0x6c, 0x65, 0x6d, 0x65, 0x74, 0x72, 0x79, 0x5f, 0x4d, 0x6f, 0x74, 0x6f, 0x72, 0x5f,
+	0x53, 0x70, 0x65, 0x65, 0x64, 0x52, 0x0d, 0x74, 0x65, 0x6c, 0x4d, 0x6f, 0x74, 0x6f, 0x72, 0x53,
+	0x70, 0x65, 0x65, 0x64, 0x12, 0x51, 0x0a, 0x0f, 0x74, 0x65, 0x6c, 0x5f, 0x6f, 0x72, 0x69, 0x65,
+	0x6e, 0x74, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x07, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x28, 0x2e,
+	0x70, 0x62, 0x2e, 0x54, 0x65, 0x6c, 0x65, 0x6d, 0x65, 0x74, 0x72, 0x79, 0x45, 0x76, 0x65, 0x6e,
+	0x74, 0x2e, 0x54, 0x65, 0x6c, 0x65, 0x6d, 0x65, 0x74, 0x72, 0x79, 0x5f, 0x4f, 0x72, 0x69, 0x65,
+	0x6e, 0x74, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x0e, 0x74, 0x65, 0x6c, 0x4f, 0x72, 0x69, 0x65,
+	0x6e, 0x74, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x3d, 0x0a, 0x07, 0x74, 0x65, 0x6c, 0x5f, 0x63,
+	0x6d, 0x64, 0x18, 0x08, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x24, 0x2e, 0x70, 0x62, 0x2e, 0x54, 0x65,
+	0x6c, 0x65, 0x6d, 0x65, 0x74, 0x72, 0x79, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x2e, 0x54, 0x65, 0x6c,
+	0x65, 0x6d, 0x65, 0x74, 0x72, 0x79, 0x5f, 0x43, 0x6f, 0x6d, 0x6d, 0x61, 0x6e, 0x64, 0x52, 0x06,
+	0x74, 0x65, 0x6c, 0x43, 0x6d, 0x64, 0x12, 0x2b, 0x0a, 0x11, 0x69, 0x6d, 0x70, 0x72, 0x6f, 0x70,
+	0x65, 0x72, 0x5f, 0x73, 0x68, 0x75, 0x74, 0x64, 0x6f, 0x77, 0x6e, 0x18, 0x09, 0x20, 0x01, 0x28,
+	0x08, 0x52, 0x10, 0x69, 0x6d, 0x70, 0x72, 0x6f, 0x70, 0x65, 0x72, 0x53, 0x68, 0x75, 0x74, 0x64,
+	0x6f, 0x77, 0x6e, 0x1a, 0x63, 0x0a, 0x14, 0x54, 0x65, 0x6c, 0x65, 0x6d, 0x65, 0x74, 0x72, 0x79,
+	0x5f, 0x55, 0x6c, 0x74, 0x72, 0x61, 0x73, 0x6f, 0x6e, 0x69, 0x63, 0x12, 0x19, 0x0a, 0x08, 0x75,
+	0x73, 0x5f, 0x66, 0x72, 0x6f, 0x6e, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x02, 0x52, 0x07, 0x75,
+	0x73, 0x46, 0x72, 0x6f, 0x6e, 0x74, 0x12, 0x17, 0x0a, 0x07, 0x75, 0x73, 0x5f, 0x6c, 0x65, 0x66,
+	0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x02, 0x52, 0x06, 0x75, 0x73, 0x4c, 0x65, 0x66, 0x74, 0x12,
+	0x17, 0x0a, 0x07, 0x75, 0x73, 0x5f, 0x62, 0x61, 0x63, 0x6b, 0x18, 0x03, 0x20, 0x01, 0x28, 0x02,
+	0x52, 0x06, 0x75, 0x73, 0x42, 0x61, 0x63, 0x6b, 0x1a, 0x5c, 0x0a, 0x0f, 0x54, 0x65, 0x6c, 0x65,
+	0x6d, 0x65, 0x74, 0x72, 0x79, 0x5f, 0x41, 0x63, 0x63, 0x65, 0x6c, 0x12, 0x17, 0x0a, 0x07, 0x61,
+	0x63, 0x63, 0x65, 0x6c, 0x5f, 0x78, 0x18, 0x01, 0x20, 0x01, 0x28, 0x02, 0x52, 0x06, 0x61, 0x63,
+	0x63, 0x65, 0x6c, 0x58, 0x12, 0x17, 0x0a, 0x07, 0x61, 0x63, 0x63, 0x65, 0x6c, 0x5f, 0x79, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x02, 0x52, 0x06, 0x61, 0x63, 0x63, 0x65, 0x6c, 0x59, 0x12, 0x17, 0x0a,
+	0x07, 0x61, 0x63, 0x63, 0x65, 0x6c, 0x5f, 0x7a, 0x18, 0x03, 0x20, 0x01, 0x28, 0x02, 0x52, 0x06,
+	0x61, 0x63, 0x63, 0x65, 0x6c, 0x5a, 0x1a, 0x55, 0x0a, 0x0e, 0x54, 0x65, 0x6c, 0x65, 0x6d, 0x65,
+	0x74, 0x72, 0x79, 0x5f, 0x47, 0x79, 0x72, 0x6f, 0x12, 0x15, 0x0a, 0x06, 0x67, 0x79, 0x72, 0x6f,
+	0x5f, 0x78, 0x18, 0x01, 0x20, 0x01, 0x28, 0x02, 0x52, 0x05, 0x67, 0x79, 0x72, 0x6f, 0x58, 0x12,
+	0x15, 0x0a, 0x06, 0x67, 0x79, 0x72, 0x6f, 0x5f, 0x79, 0x18, 0x02, 0x20, 0x01, 0x28, 0x02, 0x52,
+	0x05, 0x67, 0x79, 0x72, 0x6f, 0x59, 0x12, 0x15, 0x0a, 0x06, 0x67, 0x79, 0x72, 0x6f, 0x5f, 0x7a,
+	0x18, 0x03, 0x20, 0x01, 0x28, 0x02, 0x52, 0x05, 0x67, 0x79, 0x72, 0x6f, 0x5a, 0x1a, 0x54, 0x0a,
+	0x12, 0x54, 0x65, 0x6c, 0x65, 0x6d, 0x65, 0x74, 0x72, 0x79, 0x5f, 0x4c, 0x6f, 0x63, 0x61, 0x74,
+	0x69, 0x6f, 0x6e, 0x12, 0x12, 0x0a, 0x04, 0x72, 0x6f, 0x77, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x0d, 0x52, 0x04, 0x72, 0x6f, 0x77, 0x73, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x6c, 0x73, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x04, 0x63, 0x6f, 0x6c, 0x73, 0x12, 0x16, 0x0a, 0x04, 0x64,
+	0x61, 0x74, 0x61, 0x18, 0x03, 0x20, 0x03, 0x28, 0x05, 0x42, 0x02, 0x10, 0x01, 0x52, 0x04, 0x64,
+	0x61, 0x74, 0x61, 0x1a, 0x57, 0x0a, 0x15, 0x54, 0x65, 0x6c, 0x65, 0x6d, 0x65, 0x74, 0x72, 0x79,
+	0x5f, 0x4d, 0x6f, 0x74, 0x6f, 0x72, 0x5f, 0x53, 0x70, 0x65, 0x65, 0x64, 0x12, 0x3e, 0x0a, 0x0a,
+	0x6d, 0x6f, 0x74, 0x6f, 0x72, 0x53, 0x70, 0x65, 0x65, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0e,
+	0x32, 0x1e, 0x2e, 0x70, 0x62, 0x2e, 0x54, 0x65, 0x6c, 0x65, 0x6d, 0x65, 0x74, 0x72, 0x79, 0x45,
+	0x76, 0x65, 0x6e, 0x74, 0x2e, 0x4d, 0x6f, 0x74, 0x6f, 0x72, 0x5f, 0x53, 0x70, 0x65, 0x65, 0x64,
+	0x52, 0x0a, 0x6d, 0x6f, 0x74, 0x6f, 0x72, 0x53, 0x70, 0x65, 0x65, 0x64, 0x1a, 0x51, 0x0a, 0x11,
+	0x54, 0x65, 0x6c, 0x65, 0x6d, 0x65, 0x74, 0x72, 0x79, 0x5f, 0x45, 0x6e, 0x63, 0x6f, 0x64, 0x65,
+	0x72, 0x12, 0x1c, 0x0a, 0x09, 0x6c, 0x65, 0x66, 0x74, 0x4d, 0x6f, 0x74, 0x6f, 0x72, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x02, 0x52, 0x09, 0x6c, 0x65, 0x66, 0x74, 0x4d, 0x6f, 0x74, 0x6f, 0x72, 0x12,
+	0x1e, 0x0a, 0x0a, 0x72, 0x69, 0x67, 0x68, 0x74, 0x4d, 0x6f, 0x74, 0x6f, 0x72, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x02, 0x52, 0x0a, 0x72, 0x69, 0x67, 0x68, 0x74, 0x4d, 0x6f, 0x74, 0x6f, 0x72, 0x1a,
+	0x59, 0x0a, 0x15, 0x54, 0x65, 0x6c, 0x65, 0x6d, 0x65, 0x74, 0x72, 0x79, 0x5f, 0x4f, 0x72, 0x69,
+	0x65, 0x6e, 0x74, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x40, 0x0a, 0x0b, 0x6f, 0x72, 0x69, 0x65,
+	0x6e, 0x74, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x1e, 0x2e,
+	0x70, 0x62, 0x2e, 0x54, 0x65, 0x6c, 0x65, 0x6d, 0x65, 0x74, 0x72, 0x79, 0x45, 0x76, 0x65, 0x6e,
+	0x74, 0x2e, 0x4f, 0x72, 0x69, 0x65, 0x6e, 0x74, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x0b, 0x6f,
+	0x72, 0x69, 0x65, 0x6e, 0x74, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x22, 0xbd, 0x01, 0x0a, 0x11, 0x54,
+	0x65, 0x6c, 0x65, 0x6d, 0x65, 0x74, 0x72, 0x79, 0x5f, 0x43, 0x6f, 0x6d, 0x6d, 0x61, 0x6e, 0x64,
+	0x12, 0x12, 0x0a, 0x0e, 0x43, 0x4d, 0x44, 0x5f, 0x55, 0x4c, 0x54, 0x52, 0x41, 0x53, 0x4f, 0x4e,
+	0x49, 0x43, 0x10, 0x00, 0x12, 0x14, 0x0a, 0x10, 0x43, 0x4d, 0x44, 0x5f, 0x41, 0x43, 0x43, 0x45,
+	0x4c, 0x45, 0x52, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x10, 0x01, 0x12, 0x0c, 0x0a, 0x08, 0x43, 0x4d,
+	0x44, 0x5f, 0x47, 0x59, 0x52, 0x4f, 0x10, 0x02, 0x12, 0x10, 0x0a, 0x0c, 0x43, 0x4d, 0x44, 0x5f,
+	0x4c, 0x4f, 0x43, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x10, 0x03, 0x12, 0x13, 0x0a, 0x0f, 0x43, 0x4d,
+	0x44, 0x5f, 0x4d, 0x4f, 0x54, 0x4f, 0x52, 0x5f, 0x53, 0x50, 0x45, 0x45, 0x44, 0x10, 0x04, 0x12,
+	0x0f, 0x0a, 0x0b, 0x43, 0x4d, 0x44, 0x5f, 0x45, 0x4e, 0x43, 0x4f, 0x44, 0x45, 0x52, 0x10, 0x05,
+	0x12, 0x13, 0x0a, 0x0f, 0x43, 0x4d, 0x44, 0x5f, 0x4f, 0x52, 0x49, 0x45, 0x4e, 0x54, 0x41, 0x54,
+	0x49, 0x4f, 0x4e, 0x10, 0x06, 0x12, 0x10, 0x0a, 0x0c, 0x43, 0x4d, 0x44, 0x5f, 0x53, 0x48, 0x55,
+	0x54, 0x44, 0x4f, 0x57, 0x4e, 0x10, 0x07, 0x12, 0x11, 0x0a, 0x0d, 0x43, 0x4d, 0x44, 0x5f, 0x52,
+	0x45, 0x41, 0x44, 0x5f, 0x44, 0x41, 0x54, 0x41, 0x10, 0x08, 0x22, 0x4a, 0x0a, 0x0b, 0x4d, 0x6f,
+	0x74, 0x6f, 0x72, 0x5f, 0x53, 0x70, 0x65, 0x65, 0x64, 0x12, 0x10, 0x0a, 0x0c, 0x41, 0x43, 0x43,
+	0x45, 0x4c, 0x45, 0x52, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x10, 0x00, 0x12, 0x0f, 0x0a, 0x0b, 0x43,
+	0x4f, 0x4e, 0x53, 0x54, 0x5f, 0x53, 0x50, 0x45, 0x45, 0x44, 0x10, 0x01, 0x12, 0x0b, 0x0a, 0x07,
+	0x54, 0x55, 0x52, 0x4e, 0x49, 0x4e, 0x47, 0x10, 0x02, 0x12, 0x0b, 0x0a, 0x07, 0x53, 0x54, 0x4f,
+	0x50, 0x50, 0x45, 0x44, 0x10, 0x03, 0x22, 0x34, 0x0a, 0x0b, 0x4f, 0x72, 0x69, 0x65, 0x6e, 0x74,
+	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x06, 0x0a, 0x02, 0x55, 0x50, 0x10, 0x00, 0x12, 0x08, 0x0a,
+	0x04, 0x44, 0x4f, 0x57, 0x4e, 0x10, 0x01, 0x12, 0x08, 0x0a, 0x04, 0x4c, 0x45, 0x46, 0x54, 0x10,
+	0x02, 0x12, 0x09, 0x0a, 0x05, 0x52, 0x49, 0x47, 0x48, 0x54, 0x10, 0x03, 0x42, 0x04, 0x5a, 0x02,
+	0x2e, 0x2f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -176,16 +822,37 @@ func file_telemetry_proto_rawDescGZIP() []byte {
 	return file_telemetry_proto_rawDescData
 }
 
-var file_telemetry_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
+var file_telemetry_proto_enumTypes = make([]protoimpl.EnumInfo, 3)
+var file_telemetry_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
 var file_telemetry_proto_goTypes = []interface{}{
-	(*TelemetryEvent)(nil), // 0: pb.TelemetryEvent
+	(TelemetryEvent_Telemetry_Command)(0),        // 0: pb.TelemetryEvent.Telemetry_Command
+	(TelemetryEvent_Motor_Speed)(0),              // 1: pb.TelemetryEvent.Motor_Speed
+	(TelemetryEvent_Orientation)(0),              // 2: pb.TelemetryEvent.Orientation
+	(*TelemetryEvent)(nil),                       // 3: pb.TelemetryEvent
+	(*TelemetryEvent_Telemetry_Ultrasonic)(nil),  // 4: pb.TelemetryEvent.Telemetry_Ultrasonic
+	(*TelemetryEvent_Telemetry_Accel)(nil),       // 5: pb.TelemetryEvent.Telemetry_Accel
+	(*TelemetryEvent_Telemetry_Gyro)(nil),        // 6: pb.TelemetryEvent.Telemetry_Gyro
+	(*TelemetryEvent_Telemetry_Location)(nil),    // 7: pb.TelemetryEvent.Telemetry_Location
+	(*TelemetryEvent_Telemetry_Motor_Speed)(nil), // 8: pb.TelemetryEvent.Telemetry_Motor_Speed
+	(*TelemetryEvent_Telemetry_Encoder)(nil),     // 9: pb.TelemetryEvent.Telemetry_Encoder
+	(*TelemetryEvent_Telemetry_Orientation)(nil), // 10: pb.TelemetryEvent.Telemetry_Orientation
 }
 var file_telemetry_proto_depIdxs = []int32{
-	0, // [0:0] is the sub-list for method output_type
-	0, // [0:0] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	4,  // 0: pb.TelemetryEvent.tel_us:type_name -> pb.TelemetryEvent.Telemetry_Ultrasonic
+	5,  // 1: pb.TelemetryEvent.tel_acc:type_name -> pb.TelemetryEvent.Telemetry_Accel
+	6,  // 2: pb.TelemetryEvent.tel_gyro:type_name -> pb.TelemetryEvent.Telemetry_Gyro
+	9,  // 3: pb.TelemetryEvent.tel_enc:type_name -> pb.TelemetryEvent.Telemetry_Encoder
+	7,  // 4: pb.TelemetryEvent.tel_loc:type_name -> pb.TelemetryEvent.Telemetry_Location
+	8,  // 5: pb.TelemetryEvent.tel_motor_speed:type_name -> pb.TelemetryEvent.Telemetry_Motor_Speed
+	10, // 6: pb.TelemetryEvent.tel_orientation:type_name -> pb.TelemetryEvent.Telemetry_Orientation
+	0,  // 7: pb.TelemetryEvent.tel_cmd:type_name -> pb.TelemetryEvent.Telemetry_Command
+	1,  // 8: pb.TelemetryEvent.Telemetry_Motor_Speed.motorSpeed:type_name -> pb.TelemetryEvent.Motor_Speed
+	2,  // 9: pb.TelemetryEvent.Telemetry_Orientation.orientation:type_name -> pb.TelemetryEvent.Orientation
+	10, // [10:10] is the sub-list for method output_type
+	10, // [10:10] is the sub-list for method input_type
+	10, // [10:10] is the sub-list for extension type_name
+	10, // [10:10] is the sub-list for extension extendee
+	0,  // [0:10] is the sub-list for field type_name
 }
 
 func init() { file_telemetry_proto_init() }
@@ -206,19 +873,104 @@ func file_telemetry_proto_init() {
 				return nil
 			}
 		}
+		file_telemetry_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*TelemetryEvent_Telemetry_Ultrasonic); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_telemetry_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*TelemetryEvent_Telemetry_Accel); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_telemetry_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*TelemetryEvent_Telemetry_Gyro); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_telemetry_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*TelemetryEvent_Telemetry_Location); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_telemetry_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*TelemetryEvent_Telemetry_Motor_Speed); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_telemetry_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*TelemetryEvent_Telemetry_Encoder); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_telemetry_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*TelemetryEvent_Telemetry_Orientation); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_telemetry_proto_rawDesc,
-			NumEnums:      0,
-			NumMessages:   1,
+			NumEnums:      3,
+			NumMessages:   8,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
 		GoTypes:           file_telemetry_proto_goTypes,
 		DependencyIndexes: file_telemetry_proto_depIdxs,
+		EnumInfos:         file_telemetry_proto_enumTypes,
 		MessageInfos:      file_telemetry_proto_msgTypes,
 	}.Build()
 	File_telemetry_proto = out.File
