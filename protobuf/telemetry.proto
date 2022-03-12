@@ -3,19 +3,79 @@ package pb;
 option go_package = "./";
 
 message TelemetryEvent {
-  int32 timestamp = 1;
+  Telemetry_Ultrasonic tel_us = 1;
+  Telemetry_Accel tel_acc = 2;
+  Telemetry_Gyro tel_gyro = 3;
+  Telemetry_Encoder tel_enc = 4;
+  Telemetry_Location tel_loc = 5;
+  Telemetry_Motor_Speed tel_motor_speed = 6;
+  Telemetry_Orientation tel_orientation= 7;
+  Telemetry_Command tel_cmd = 8;
+  bool improper_shutdown = 9;
 
-  float us_front = 2;
-  float us_left = 3;
-  float us_back= 4;
+  // Nested messages
+  message Telemetry_Ultrasonic {
+    float us_front = 1;
+    float us_left = 2;
+    float us_back = 3;
+  }
 
-  float accel_x = 5;
-  float accel_y = 6;
-  float accel_z = 7;
-  
-  float gyro_x = 8;
-  float gyro_y = 9;
-  float gyro_z = 10;
+  message Telemetry_Accel {
+    float accel_x = 1;
+    float accel_y = 2;
+    float accel_z = 3;
+  }
+
+  message Telemetry_Gyro {
+    float gyro_x = 1;
+    float gyro_y = 2;
+    float gyro_z = 3;
+  }
+
+  message Telemetry_Location {
+    uint32 rows = 1;
+    uint32 cols = 2;
+    repeated int32 data = 3 [packed=true];
+  }
+
+  message Telemetry_Motor_Speed {
+    Motor_Speed motorSpeed = 1;
+  }
+
+  message Telemetry_Encoder {
+    float leftMotor = 1;
+    float rightMotor = 2;
+  }
+
+  message Telemetry_Orientation {
+    Orientation orientation = 1;
+  }
+
+  // Shitty way to do switch since we don't have gRPC big sad
+  enum Telemetry_Command {
+    CMD_ULTRASONIC = 0;
+    CMD_ACCELERATION = 1;
+    CMD_GYRO = 2;
+    CMD_LOCATION = 3;
+    CMD_MOTOR_SPEED = 4;
+    CMD_ENCODER = 5;
+    CMD_ORIENTATION = 6;
+    CMD_SHUTDOWN = 7;
+    CMD_READ_DATA = 8;
+  }
+
+  enum Motor_Speed {
+    ACCELERATION = 0;
+    CONST_SPEED = 1;
+    TURNING = 2;
+    STOPPED = 3;
+  }
+
+  enum Orientation {
+    UP = 0;
+    DOWN = 1;
+    LEFT = 2;
+    RIGHT = 3;
+  }
+
 }
-
-
