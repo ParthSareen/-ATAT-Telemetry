@@ -65,17 +65,17 @@ message TelemetryEvent {
   }
 
   enum Motor_Speed {
-    ACCELERATION = 0;
-    CONST_SPEED = 1;
-    TURNING = 2;
-    STOPPED = 3;
+    STOPPED = 0;
+    ACCELERATION = 1;
+    CONST_SPEED = 2;
+    TURNING = 3;
   }
 
   enum Orientation {
     UP = 0;
-    DOWN = 1;
-    LEFT = 2;
-    RIGHT = 3;
+    RIGHT = 1;
+    DOWN = 2;
+    LEFT = 3;
   }
 
 }
