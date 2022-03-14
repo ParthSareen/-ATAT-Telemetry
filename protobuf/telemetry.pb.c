@@ -9,4 +9,28 @@
 PB_BIND(pb_TelemetryEvent, pb_TelemetryEvent, AUTO)
 
 
+PB_BIND(pb_TelemetryEvent_Telemetry_Ultrasonic, pb_TelemetryEvent_Telemetry_Ultrasonic, AUTO)
+
+
+PB_BIND(pb_TelemetryEvent_Telemetry_Accel, pb_TelemetryEvent_Telemetry_Accel, AUTO)
+
+
+PB_BIND(pb_TelemetryEvent_Telemetry_Gyro, pb_TelemetryEvent_Telemetry_Gyro, AUTO)
+
+
+PB_BIND(pb_TelemetryEvent_Telemetry_Location, pb_TelemetryEvent_Telemetry_Location, AUTO)
+
+
+PB_BIND(pb_TelemetryEvent_Telemetry_Motor_Speed, pb_TelemetryEvent_Telemetry_Motor_Speed, AUTO)
+
+
+PB_BIND(pb_TelemetryEvent_Telemetry_Encoder, pb_TelemetryEvent_Telemetry_Encoder, AUTO)
+
+
+PB_BIND(pb_TelemetryEvent_Telemetry_Orientation, pb_TelemetryEvent_Telemetry_Orientation, AUTO)
+
+
+
+
+
 

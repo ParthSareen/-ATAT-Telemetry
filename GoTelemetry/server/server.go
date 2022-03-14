@@ -2,11 +2,8 @@ package main
 
 import (
 	telemetry "GoTelemetry/server/pb"
-	"bufio"
 	"context"
 	"flag"
-	"strings"
-
 	//"fmt"
 	"github.com/golang/protobuf/proto"
 	influxdb2 "github.com/influxdata/influxdb-client-go/v2"
@@ -31,8 +28,7 @@ func main() {
 	//flag.StringVar(&dbUname, "u", "admin", "influxDB username")
 	//flag.StringVar(&dbPwd, "p", "admin", "influxDB password")
 	flag.Parse()
-	authToken = os.Getenv("INFLUX_TOKEN")
-
+	//authToken = os.Getenv("INFLUX_TOKEN")
 	ln, err := net.Listen(network, addr)
 	if err != nil {
 		log.Println(err)
@@ -48,7 +44,6 @@ func main() {
 	log.Printf("Telemetry Service Initialized: (%s) %s\n", network, addr)
 
 	for {
-		// TODO: Look into cleaning client setup code
 		client := influxdb2.NewClient(dbAddr, authToken)
 
 		conn, err := ln.Accept()
@@ -61,7 +56,9 @@ func main() {
 			continue
 		}
 		log.Println("Connected to ", conn.RemoteAddr())
-		go handleConnection(conn, client)
+		// TODO look into how locking will work if needed + pass down
+		handleConnection(conn, client)
+		// TODO probably should close this at some point
 		//client.Close()
 	}
 }
@@ -75,8 +72,9 @@ func handleConnection(conn net.Conn, client influxdb2.Client) {
 	}()
 
 	buf := make([]byte, 1024)
-
+	//TODO: add timeout
 	n, err := conn.Read(buf)
+	log.Println(n)
 	if err != nil {
 		log.Println(err)
 		return
@@ -85,141 +83,84 @@ func handleConnection(conn net.Conn, client influxdb2.Client) {
 		log.Println("no data received")
 		return
 	}
-	// TODO add case to send data back
-	//if n ...
-	//handleText(conn)
-
 	var tel telemetry.TelemetryEvent
 	if err := proto.Unmarshal(buf[:n], &tel); err != nil {
-		//log.Println("failed to unmarshal:", err)
-		//return
-		log.Println("unmarshal error 1")
-		// TODO cleanup not returning error here
-	}
-	if err == nil {
-		log.Println("tel proto read")
-		//writeAPI := client.WriteAPI("380", "380")
-		//go handleTelemetryData(&tel, writeAPI, "Test_Event")
-		return
-
-	}
-
-	var backup telemetry.ReadBackup
-	if err := proto.Unmarshal(buf[:n], &backup); err != nil {
-		//log.Println("failed to unmarshal:", err)
-		//return
-		log.Println("Error on unmarshal backup")
-	}
-
-	//go getInfluxData(&backup, client)
-	if err == nil {
-		log.Println("Backup proto read")
-		go handleReadBackup(conn, &backup, client)
-	}
-
-}
-
-func handleText(conn net.Conn) {
-	//defer conn.Close()
-	s := bufio.NewScanner(conn)
-
-	for s.Scan() {
-
-		data := s.Text()
-		log.Println(data)
-		if data == "" {
-			conn.Write([]byte(">"))
-			continue
-		}
-
-		if data == "exit" {
-			return
-		}
-
-		handleCommandText(data, conn)
-	}
-}
-
-func handleCommandText(inp string, conn net.Conn) {
-	var InvalidCommand = []byte("Invalid Command")
-	str := strings.Split(inp, " ")
-
-	if len(str) <= 0 {
-		conn.Write(InvalidCommand)
+		log.Println("failed to unmarshal:", err)
 		return
 	}
-	temp := telemetry.TelemetryEvent{
-		Timestamp: 123,
-		UsFront:   12344,
-		UsLeft:    0,
-		UsBack:    0,
-		AccelX:    0,
-		AccelY:    0,
-		AccelZ:    0,
-		GyroX:     0,
-		GyroY:     0,
-		GyroZ:     0,
+	writeAPI := client.WriteAPI("380", "380")
+	switch tel.TelCmd {
+	case telemetry.TelemetryEvent_CMD_READ_DATA:
+		handleReadBackup(conn, &tel)
+	case telemetry.TelemetryEvent_CMD_ULTRASONIC:
+		ultrasonicData(&tel, writeAPI)
+	case telemetry.TelemetryEvent_CMD_ACCELERATION:
+		imuDataAccel(&tel, writeAPI)
+	case telemetry.TelemetryEvent_CMD_GYRO:
+		imuDataGyro(&tel, writeAPI)
 	}
-	command := str[0]
+	// Do not run read in goroutine as it will not have enough time to read
+	//handleReadBackup(conn, tel)
+	return
 
-	switch command {
-
-	case "GET":
-		tempProto, _ := proto.Marshal(&temp)
-		conn.Write(tempProto)
-	case "SET":
-		conn.Write([]byte("test"))
-	default:
-		conn.Write(InvalidCommand)
-	}
-
-	conn.Write([]byte("\n>"))
 }
 
-func handleTelemetryData(tel *telemetry.TelemetryEvent, writeAPI api.WriteAPI, measurement string) {
+func ultrasonicData(tel *telemetry.TelemetryEvent, writeAPI api.WriteAPI) {
+	log.Println("Here")
+	measurement := "Ultrasonic_Test"
 	eventUuid := uuid.NewV4().String()
-	log.Println("Telemetry data:")
-	log.Printf("{Timestamp:%d, EventID:%s, ax: %.2f, ay:%.2f, az:%.2f, gx:%.2f, gy:%.2f, gz:%.2f, us_back:%.2f, us_left:%.2f, us_front:%.2f}\n",
-		tel.Timestamp,
-		eventUuid,
-		tel.AccelX,
-		tel.AccelY,
-		tel.AccelZ,
-		tel.GyroX,
-		tel.GyroY,
-		tel.GyroZ,
-		tel.UsBack,
-		tel.UsLeft,
-		tel.UsFront,
-	)
-	p := influxdb2.NewPointWithMeasurement(measurement).
-		//AddTag("unit", "temperature").
-		// TODO add more fields
-		AddField("Event ID", eventUuid).
-		AddField("US_Left", tel.UsLeft).
-		AddField("US_Front", tel.UsFront).
-		AddField("US_Back", tel.UsBack).
-		SetTime(time.Now())
-	// write point asynchronously
-	writeAPI.WritePoint(p)
-	// Flush writes
-	writeAPI.Flush()
-	// error handling
-	//err := writeAPI.Errors()
-	//if err != nil {
-	//	panic(err)
-	//}
 
-	log.Println("Uploaded event")
+	p := influxdb2.NewPointWithMeasurement(measurement).
+		AddField("Event ID", eventUuid).
+		AddField("US_Left", tel.TelUs.UsLeft).
+		AddField("US_Front", tel.TelUs.UsFront).
+		AddField("US_Back", tel.TelUs.UsBack).
+		SetTime(time.Now())
+
+	writeAPI.WritePoint(p)
+	writeAPI.Flush()
+	log.Println("Uploaded Ultrasonic Data")
 }
 
-func handleReadBackup(conn net.Conn, backup *telemetry.ReadBackup, client influxdb2.Client) {
-	defer func(conn net.Conn) {
-		err := conn.Close()
-		if err != nil {
-			log.Panic(err)
-		}
-	}(conn)
+func imuDataAccel(tel *telemetry.TelemetryEvent, writeAPI api.WriteAPI) {
+	measurement := "IMU_Test_Accel"
+	eventUuid := uuid.NewV4().String()
+
+	p := influxdb2.NewPointWithMeasurement(measurement).
+		AddField("Event ID", eventUuid).
+		AddField("Accel_X", tel.TelAcc.AccelX).
+		AddField("Accel_Y", tel.TelAcc.AccelY).
+		AddField("Accel_Z", tel.TelAcc.AccelZ).
+		SetTime(time.Now())
+
+	writeAPI.WritePoint(p)
+	writeAPI.Flush()
+	log.Println("Uploaded IMU Acceleration Data")
+}
+
+func imuDataGyro(tel *telemetry.TelemetryEvent, writeAPI api.WriteAPI) {
+	measurement := "IMU_Test_Gyro"
+	eventUuid := uuid.NewV4().String()
+
+	p := influxdb2.NewPointWithMeasurement(measurement).
+		AddField("Event ID", eventUuid).
+		AddField("Gyro_X", tel.TelGyro.GyroX).
+		AddField("Gyro_Y", tel.TelGyro.GyroY).
+		AddField("Gyro_Z", tel.TelGyro.GyroZ).
+		SetTime(time.Now())
+
+	writeAPI.WritePoint(p)
+	writeAPI.Flush()
+	log.Println("Uploaded IMU Gyro Data")
+}
+
+func handleReadBackup(conn net.Conn, event *telemetry.TelemetryEvent) {
+	//defer func(conn net.Conn) {
+	//	err := conn.Close()
+	//	if err != nil {
+	//		log.Panic(err)
+	//	}
+	//}(conn)
 
 	//results := getInfluxData(backup, client)
 
@@ -230,30 +171,32 @@ func handleReadBackup(conn net.Conn, backup *telemetry.ReadBackup, client influx
 	//		return
 	//	}
 	//}
-	tel := telemetry.TelemetryEvent{
-		Timestamp: 0,
-		UsFront:   0,
-		UsLeft:    44,
-		UsBack:    0,
-		AccelX:    0,
-		AccelY:    0,
-		AccelZ:    0,
-		GyroX:     0,
-		GyroY:     0,
-		GyroZ:     0,
-	}
-	tempProto, err := proto.Marshal(&tel)
+	//telE := telemetry.TelemetryEvent{
+	//	Timestamp: 0,
+	//	UsFront:   0,
+	//	UsLeft:    44,
+	//	UsBack:    0,
+	//	AccelX:    0,
+	//	AccelY:    0,
+	//	AccelZ:    0,
+	//	GyroX:     0,
+	//	GyroY:     0,
+	//	GyroZ:     0,
+	//}
+	tempProto, err := proto.Marshal(event)
 	if err != nil {
 		panic(err)
 	}
 	log.Println("writing")
-	//conn.Write([]byte("hi"))
-	conn.Write(tempProto)
+	_, err = conn.Write(tempProto)
+	if err != nil {
+		panic(err)
+	}
 	log.Println("written")
 
 }
 
-func getInfluxData(backup *telemetry.ReadBackup, client influxdb2.Client) map[string]float64 {
+func getInfluxData(client influxdb2.Client) map[string]float64 {
 	// TODO return a collection of data from here
 	//s := string(backup.ReadFrom)
 	// Get query client

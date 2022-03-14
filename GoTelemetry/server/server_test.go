@@ -24,7 +24,7 @@ func TestInfluxUpload(t *testing.T) {
 	authToken = os.Getenv("INFLUX_TOKEN")
 	client := influxdb2.NewClient(dbAddr, authToken)
 	writeAPI := client.WriteAPI("380", "380")
-	handleTelemetryData(&tel, writeAPI, "Influx_Test_Event")
+	telemetryUpload(&tel, writeAPI, "Influx_Test_Event")
 	t.Log("Successful upload")
 	defer client.Close()
 }
