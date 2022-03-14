@@ -28,8 +28,7 @@ func main() {
 	//flag.StringVar(&dbUname, "u", "admin", "influxDB username")
 	//flag.StringVar(&dbPwd, "p", "admin", "influxDB password")
 	flag.Parse()
-	authToken = os.Getenv("INFLUX_TOKEN")
-
+	//authToken = os.Getenv("INFLUX_TOKEN")
 	ln, err := net.Listen(network, addr)
 	if err != nil {
 		log.Println(err)
@@ -59,7 +58,7 @@ func main() {
 		log.Println("Connected to ", conn.RemoteAddr())
 		// TODO look into how locking will work if needed + pass down
 		handleConnection(conn, client)
-		// TODO probably should close this at some point lol
+		// TODO probably should close this at some point
 		//client.Close()
 	}
 }
@@ -73,8 +72,9 @@ func handleConnection(conn net.Conn, client influxdb2.Client) {
 	}()
 
 	buf := make([]byte, 1024)
-
+	//TODO: add timeout
 	n, err := conn.Read(buf)
+	log.Println(n)
 	if err != nil {
 		log.Println(err)
 		return
@@ -83,7 +83,6 @@ func handleConnection(conn net.Conn, client influxdb2.Client) {
 		log.Println("no data received")
 		return
 	}
-
 	var tel telemetry.TelemetryEvent
 	if err := proto.Unmarshal(buf[:n], &tel); err != nil {
 		log.Println("failed to unmarshal:", err)
@@ -94,18 +93,20 @@ func handleConnection(conn net.Conn, client influxdb2.Client) {
 	case telemetry.TelemetryEvent_CMD_READ_DATA:
 		handleReadBackup(conn, &tel)
 	case telemetry.TelemetryEvent_CMD_ULTRASONIC:
-		uploadUltrasonicData(&tel, writeAPI)
+		ultrasonicData(&tel, writeAPI)
 	case telemetry.TelemetryEvent_CMD_ACCELERATION:
-		uploadImuDataAccel(&tel, writeAPI)
+		imuDataAccel(&tel, writeAPI)
+	case telemetry.TelemetryEvent_CMD_GYRO:
+		imuDataGyro(&tel, writeAPI)
 	}
-	//log.Println("Tel proto read")
 	// Do not run read in goroutine as it will not have enough time to read
 	//handleReadBackup(conn, tel)
 	return
 
 }
 
-func uploadUltrasonicData(tel *telemetry.TelemetryEvent, writeAPI api.WriteAPI) {
+func ultrasonicData(tel *telemetry.TelemetryEvent, writeAPI api.WriteAPI) {
+	log.Println("Here")
 	measurement := "Ultrasonic_Test"
 	eventUuid := uuid.NewV4().String()
 
@@ -121,8 +122,8 @@ func uploadUltrasonicData(tel *telemetry.TelemetryEvent, writeAPI api.WriteAPI) 
 	log.Println("Uploaded Ultrasonic Data")
 }
 
-func uploadImuDataAccel(tel *telemetry.TelemetryEvent, writeAPI api.WriteAPI) {
-	measurement := "IMU_Test"
+func imuDataAccel(tel *telemetry.TelemetryEvent, writeAPI api.WriteAPI) {
+	measurement := "IMU_Test_Accel"
 	eventUuid := uuid.NewV4().String()
 
 	p := influxdb2.NewPointWithMeasurement(measurement).
@@ -135,6 +136,22 @@ func uploadImuDataAccel(tel *telemetry.TelemetryEvent, writeAPI api.WriteAPI) {
 	writeAPI.WritePoint(p)
 	writeAPI.Flush()
 	log.Println("Uploaded IMU Acceleration Data")
+}
+
+func imuDataGyro(tel *telemetry.TelemetryEvent, writeAPI api.WriteAPI) {
+	measurement := "IMU_Test_Gyro"
+	eventUuid := uuid.NewV4().String()
+
+	p := influxdb2.NewPointWithMeasurement(measurement).
+		AddField("Event ID", eventUuid).
+		AddField("Gyro_X", tel.TelGyro.GyroX).
+		AddField("Gyro_Y", tel.TelGyro.GyroY).
+		AddField("Gyro_Z", tel.TelGyro.GyroZ).
+		SetTime(time.Now())
+
+	writeAPI.WritePoint(p)
+	writeAPI.Flush()
+	log.Println("Uploaded IMU Gyro Data")
 }
 
 func handleReadBackup(conn net.Conn, event *telemetry.TelemetryEvent) {
