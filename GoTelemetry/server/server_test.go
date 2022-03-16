@@ -7,6 +7,7 @@ import (
 	"testing"
 )
 
+// TODO Update tests when you're not dying
 func TestInfluxUpload(t *testing.T) {
 	tel := telemetry.TelemetryEvent{
 		Timestamp: 0,
