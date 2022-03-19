@@ -11,7 +11,7 @@ import (
 )
 
 func LocationData(tel *telemetry.TelemetryEvent, writeAPI api.WriteAPI) {
-	measurement := "Location_Test"
+	measurement := "Location"
 	eventUuid := uuid.NewV4().String()
 
 	data := tel.TelLoc.Data
@@ -21,7 +21,7 @@ func LocationData(tel *telemetry.TelemetryEvent, writeAPI api.WriteAPI) {
 
 	// TODO: Finish impl
 	for index := 0; index < total; index++ {
-		i := int(index / 6)
+		i := index / 6
 		name := fmt.Sprintf("Location: Row %d, Col %d", i)
 		p := influxdb2.NewPointWithMeasurement(measurement).
 			AddField("Event ID", eventUuid).

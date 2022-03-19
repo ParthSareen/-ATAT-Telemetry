@@ -88,14 +88,15 @@ func handleConnection(conn net.Conn, client influxdb2.Client) {
 	}
 	writeAPI := client.WriteAPI("380", "380")
 
+	// TODO: need to make fault tolerant
 	switch tel.TelCmd {
 	case telemetry.TelemetryEvent_CMD_READ_DATA:
 		handler.HandleReadBackup(conn, &tel)
 	case telemetry.TelemetryEvent_CMD_ULTRASONIC:
-		log.Println("Ultrasonic Data")
+		//log.Println("Ultrasonic Data")
 		handler.UltrasonicData(&tel, writeAPI)
 	case telemetry.TelemetryEvent_CMD_ACCELERATION:
-		log.Println("Acceleration Data")
+		//log.Println("Acceleration Data")
 		handler.ImuDataAccel(&tel, writeAPI)
 	case telemetry.TelemetryEvent_CMD_GYRO:
 		handler.ImuDataGyro(&tel, writeAPI)

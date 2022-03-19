@@ -10,7 +10,7 @@ import (
 )
 
 func ShutdownData(tel *telemetry.TelemetryEvent, writeAPI api.WriteAPI) {
-	measurement := "General_Test_Shutdown"
+	measurement := "General_Shutdown"
 	eventUuid := uuid.NewV4().String()
 
 	p := influxdb2.NewPointWithMeasurement(measurement).
@@ -24,12 +24,12 @@ func ShutdownData(tel *telemetry.TelemetryEvent, writeAPI api.WriteAPI) {
 }
 
 func RobotOrientation(tel *telemetry.TelemetryEvent, writeAPI api.WriteAPI) {
-	measurement := "General_Test_Orientation"
+	measurement := "General_Orientation"
 	eventUuid := uuid.NewV4().String()
-
+	num := int(tel.TelOrientation.Orientation.Number())
 	p := influxdb2.NewPointWithMeasurement(measurement).
 		AddField("Event ID", eventUuid).
-		AddField("Orientation", tel.TelOrientation.Orientation).
+		AddField("Orientation", num).
 		SetTime(time.Now())
 
 	writeAPI.WritePoint(p)
