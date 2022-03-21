@@ -10,7 +10,7 @@ import (
 )
 
 func ImuDataAccel(tel *telemetry.TelemetryEvent, writeAPI api.WriteAPI) {
-	measurement := "IMU_Test_Accel"
+	measurement := "IMU_Accel"
 	eventUuid := uuid.NewV4().String()
 
 	p := influxdb2.NewPointWithMeasurement(measurement).
@@ -26,7 +26,7 @@ func ImuDataAccel(tel *telemetry.TelemetryEvent, writeAPI api.WriteAPI) {
 }
 
 func ImuDataGyro(tel *telemetry.TelemetryEvent, writeAPI api.WriteAPI) {
-	measurement := "IMU_Test_Gyro"
+	measurement := "IMU_Gyro"
 	eventUuid := uuid.NewV4().String()
 
 	p := influxdb2.NewPointWithMeasurement(measurement).

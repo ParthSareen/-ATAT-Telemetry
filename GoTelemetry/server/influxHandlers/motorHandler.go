@@ -10,7 +10,7 @@ import (
 )
 
 func MotorDataEncoder(tel *telemetry.TelemetryEvent, writeAPI api.WriteAPI) {
-	measurement := "Motor_Test_Encoder"
+	measurement := "Motor_Encoder"
 	eventUuid := uuid.NewV4().String()
 
 	p := influxdb2.NewPointWithMeasurement(measurement).
@@ -25,7 +25,7 @@ func MotorDataEncoder(tel *telemetry.TelemetryEvent, writeAPI api.WriteAPI) {
 }
 
 func MotorDataSpeed(tel *telemetry.TelemetryEvent, writeAPI api.WriteAPI) {
-	measurement := "Motor_Test_Speed"
+	measurement := "Motor_Speed"
 	eventUuid := uuid.NewV4().String()
 
 	// TODO Motor speed might need to be refactored with motor speed left and right

@@ -52,19 +52,21 @@ func HandleReadBackup(conn net.Conn, event *telemetry.TelemetryEvent) {
 }
 
 func getInfluxData(client influxdb2.Client) map[string]float64 {
+	//event := telemetry.TelemetryEvent{}
+
 	// TODO return a collection of data from here
 	//s := string(backup.ReadFrom)
 	// Get query client
 	queryAPI := client.QueryAPI("380")
-	queries := make(map[string]string)
+	queries_us := make(map[string]string)
 
-	queries["US_Back"] = `from(bucket:"380")|> range(start: -1m) |> filter(fn: (r) => r._measurement == "Influx_Test_Event") |> filter(fn: (r) => r._field == "US_Back") |> last()`
-	queries["US_Front"] = `from(bucket:"380")|> range(start: -1m) |> filter(fn: (r) => r._measurement == "Influx_Test_Event") |> filter(fn: (r) => r._field == "US_Front") |> last()`
-	queries["US_Left"] = `from(bucket:"380")|> range(start: -1m) |> filter(fn: (r) => r._measurement == "Influx_Test_Event") |> filter(fn: (r) => r._field == "US_Left") |> last()`
+	queries_us["US_Back"] = `from(bucket:"380")|> range(start: -1m) |> filter(fn: (r) => r._measurement == "Influx_Test_Event") |> filter(fn: (r) => r._field == "US_Back") |> last()`
+	queries_us["US_Front"] = `from(bucket:"380")|> range(start: -1m) |> filter(fn: (r) => r._measurement == "Influx_Test_Event") |> filter(fn: (r) => r._field == "US_Front") |> last()`
+	queries_us["US_Left"] = `from(bucket:"380")|> range(start: -1m) |> filter(fn: (r) => r._measurement == "Influx_Test_Event") |> filter(fn: (r) => r._field == "US_Left") |> last()`
 
 	results := make(map[string]float64)
 	// get QueryTableResult
-	for queryType, query := range queries {
+	for queryType, query := range queries_us {
 		log.Println(queryType)
 		result, err := queryAPI.Query(context.Background(), query)
 		if err != nil {

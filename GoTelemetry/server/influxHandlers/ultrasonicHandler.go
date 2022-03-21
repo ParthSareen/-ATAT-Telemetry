@@ -10,7 +10,7 @@ import (
 )
 
 func UltrasonicData(tel *telemetry.TelemetryEvent, writeAPI api.WriteAPI) {
-	measurement := "Ultrasonic_Test"
+	measurement := "Ultrasonic"
 	eventUuid := uuid.NewV4().String()
 
 	p := influxdb2.NewPointWithMeasurement(measurement).

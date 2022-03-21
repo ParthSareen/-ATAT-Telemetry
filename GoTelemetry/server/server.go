@@ -25,8 +25,7 @@ func main() {
 	//flag.StringVar(&dbUname, "u", "admin", "influxDB username")
 	//flag.StringVar(&dbPwd, "p", "admin", "influxDB password")
 	flag.Parse()
-	//authToken = os.Getenv("INFLUX_TOKEN")
-	authToken = "kq-DUuEgrNFdBcTbb_AaAzJ5oBSWU5cOCYcLAnHU_oZV3T-4fTIzpk6salOSvQrKnz_de0rUXZcvfs3MGtmOlw=="
+	authToken = os.Getenv("INFLUX_TOKEN")
 	ln, err := net.Listen(network, addr)
 	if err != nil {
 		log.Println(err)
@@ -88,14 +87,13 @@ func handleConnection(conn net.Conn, client influxdb2.Client) {
 	}
 	writeAPI := client.WriteAPI("380", "380")
 
+	// TODO: need to make fault tolerant
 	switch tel.TelCmd {
 	case telemetry.TelemetryEvent_CMD_READ_DATA:
 		handler.HandleReadBackup(conn, &tel)
 	case telemetry.TelemetryEvent_CMD_ULTRASONIC:
-		log.Println("Ultrasonic Data")
 		handler.UltrasonicData(&tel, writeAPI)
 	case telemetry.TelemetryEvent_CMD_ACCELERATION:
-		log.Println("Acceleration Data")
 		handler.ImuDataAccel(&tel, writeAPI)
 	case telemetry.TelemetryEvent_CMD_GYRO:
 		handler.ImuDataGyro(&tel, writeAPI)
