@@ -4,6 +4,8 @@ import (
 	handler "GoTelemetry/server/influxHandlers"
 	telemetry "GoTelemetry/server/pb"
 	"flag"
+	"time"
+
 	//"fmt"
 	"github.com/golang/protobuf/proto"
 	influxdb2 "github.com/influxdata/influxdb-client-go/v2"
@@ -25,7 +27,9 @@ func main() {
 	//flag.StringVar(&dbUname, "u", "admin", "influxDB username")
 	//flag.StringVar(&dbPwd, "p", "admin", "influxDB password")
 	flag.Parse()
-	authToken = os.Getenv("INFLUX_TOKEN")
+	//authToken = os.Getenv("INFLUX_TOKEN")
+	// TODO: Remove
+	authToken = "kq-DUuEgrNFdBcTbb_AaAzJ5oBSWU5cOCYcLAnHU_oZV3T-4fTIzpk6salOSvQrKnz_de0rUXZcvfs3MGtmOlw=="
 	ln, err := net.Listen(network, addr)
 	if err != nil {
 		log.Println(err)
@@ -36,11 +40,13 @@ func main() {
 		if err != nil {
 
 		}
+
 	}(ln)
 
 	log.Printf("Telemetry Service Initialized: (%s) %s\n", network, addr)
 
 	for {
+
 		client := influxdb2.NewClient(dbAddr, authToken)
 
 		conn, err := ln.Accept()
@@ -54,9 +60,22 @@ func main() {
 		}
 		log.Println("Connected to ", conn.RemoteAddr())
 		// TODO look into how locking will work if needed + pass down
-		handleConnection(conn, client)
+		go handleConnection(conn, client)
 		// TODO probably should close this at some point
 		//client.Close()
+	}
+}
+
+func writeToFile(tel *telemetry.TelemetryEvent) {
+	file, err := os.OpenFile("gyro2.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		log.Fatal(err)
+	}
+	if _, err := file.Write([]byte("\n\n" + time.Now().String() + " " + tel.String())); err != nil {
+		log.Fatal(err)
+	}
+	if err := file.Close(); err != nil {
+		log.Fatal(err)
 	}
 }
 
@@ -88,11 +107,13 @@ func handleConnection(conn net.Conn, client influxdb2.Client) {
 	writeAPI := client.WriteAPI("380", "380")
 
 	// TODO: need to make fault tolerant
+	log.Println(tel.String())
 	switch tel.TelCmd {
 	case telemetry.TelemetryEvent_CMD_READ_DATA:
 		handler.HandleReadBackup(conn, &tel)
 	case telemetry.TelemetryEvent_CMD_ULTRASONIC:
-		handler.UltrasonicData(&tel, writeAPI)
+		go handler.UltrasonicData(&tel, writeAPI)
+		go writeToFile(&tel)
 	case telemetry.TelemetryEvent_CMD_ACCELERATION:
 		handler.ImuDataAccel(&tel, writeAPI)
 	case telemetry.TelemetryEvent_CMD_GYRO:
