@@ -13,3 +13,7 @@ Telemetry Server for collecting telemetry data
 `python ~/Documents/nanopb/generator/nanopb_generator.py telemetry.proto`
 
 
+## The only video I took of this working 🥲
+
+https://github.com/ParthSareen/ATAT-Telemetry/assets/29360864/315c2dfe-0c0f-4c6e-9197-ad439d5720ed
+
