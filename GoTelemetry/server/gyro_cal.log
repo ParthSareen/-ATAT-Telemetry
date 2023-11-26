@@ -1,0 +1,66 @@
+
+
+2022-03-29 13:29:33.346419 -0400 EDT m=+20.296525126 tel_us:{us_front:1122 us_left:151} tel_acc:{accel_x:0.10534488 accel_y:0.20590134 accel_z:-11.271901} tel_gyro:{gyro_x:0.19581743 gyro_y:-0.03724788 gyro_z:7.707e-42} tel_orientation:{orientation:LEFT}
+
+2022-03-29 13:29:34.193111 -0400 EDT m=+21.143217251 tel_us:{us_front:931 us_left:165} tel_acc:{accel_x:-0.06703765 accel_y:-0.02873042 accel_z:-13.694834} tel_gyro:{gyro_x:0.1979459 gyro_y:-0.020220278} tel_orientation:{orientation:LEFT}
+
+2022-03-29 13:29:35.184553 -0400 EDT m=+22.134657918 tel_us:{us_front:760 us_left:177} tel_acc:{accel_x:-0.1388637 accel_y:-0.7134721 accel_z:-11.152191} tel_gyro:{gyro_x:0.19688165 gyro_y:-0.054275483 gyro_z:1.5414e-41} tel_orientation:{orientation:LEFT}
+
+2022-03-29 13:29:35.798352 -0400 EDT m=+22.748456793 tel_us:{us_front:582 us_left:183} tel_acc:{accel_x:0.7374141 accel_y:-1.6567876 accel_z:-9.179369} tel_gyro:{gyro_x:0.005321126 gyro_y:-0.026605628 gyro_z:8.408e-42} tel_orientation:{orientation:LEFT}
+
+2022-03-29 13:29:37.289096 -0400 EDT m=+24.239200168 tel_us:{us_front:201 us_left:177} tel_acc:{accel_x:-0.51714754 accel_y:-2.1787236 accel_z:-8.7532015} tel_gyro:{gyro_x:-0.010642252 gyro_y:0.0031926755 gyro_z:1.5414e-41} tel_orientation:{orientation:LEFT}
+
+2022-03-29 13:29:38.839114 -0400 EDT m=+25.789217168 tel_us:{us_front:458 us_left:141} tel_acc:{accel_x:0.047884032 accel_y:-0.78050977 accel_z:-8.66701} tel_gyro:{gyro_x:0.07449576 gyro_y:-0.015963377 gyro_z:1.5414e-41} tel_orientation:{}
+
+2022-03-29 13:29:40.098867 -0400 EDT m=+27.048969168 tel_us:{us_front:571 us_left:72} tel_acc:{accel_x:-0.9576807 accel_y:1.043872 accel_z:-14.226347} tel_gyro:{gyro_x:-0.07768843 gyro_y:0.26499206 gyro_z:3.3631e-41} tel_orientation:{}
+
+2022-03-29 13:29:41.414819 -0400 EDT m=+28.364921085 tel_us:{us_front:995 us_left:63} tel_acc:{accel_x:-0.4213795 accel_y:1.3455414 accel_z:-9.730036} tel_gyro:{gyro_x:-0.1436704 gyro_y:0.100037165 gyro_z:8.408e-42} tel_orientation:{}
+
+2022-03-29 13:29:42.255841 -0400 EDT m=+29.205942335 tel_us:{us_front:748 us_left:84} tel_acc:{accel_x:-0.18674773 accel_y:0.5410896 accel_z:-7.833828} tel_gyro:{gyro_x:0.3980202 gyro_y:0.027669854 gyro_z:2.2335498e-37} tel_orientation:{}
+
+2022-03-29 13:29:43.37822 -0400 EDT m=+30.328320876 tel_us:{us_front:503 us_left:100} tel_acc:{accel_x:1.2162545 accel_y:2.1308396 accel_z:-13.034034} tel_gyro:{gyro_x:0.29372615 gyro_y:-0.013834927 gyro_z:1.9908447} tel_orientation:{}
+
+2022-03-29 13:29:44.289076 -0400 EDT m=+31.239175501 tel_us:{us_front:279 us_left:121} tel_acc:{accel_x:0.8379706 accel_y:-2.9783869 accel_z:-12.885593} tel_gyro:{gyro_x:-0.22029461 gyro_y:0.017027603 gyro_z:1.401e-42} tel_orientation:{}
+
+2022-03-29 13:29:46.128501 -0400 EDT m=+33.078599793 tel_us:{us_front:945 us_left:137} tel_acc:{accel_x:-2.3223755 accel_y:-0.45968673 accel_z:-0.8810662} tel_gyro:{gyro_x:0.2543498 gyro_y:-0.07768843 gyro_z:3.8794668e-37} tel_orientation:{orientation:RIGHT}
+
+2022-03-29 13:29:46.93599 -0400 EDT m=+33.886088460 tel_us:{us_front:987 us_left:121} tel_acc:{accel_x:0.24899697 accel_y:-0.32561144 accel_z:-7.0964136} tel_gyro:{gyro_x:0.08726646 gyro_y:0.18411095 gyro_z:8.408e-42} tel_orientation:{orientation:RIGHT}
+
+2022-03-29 13:29:48.282175 -0400 EDT m=+35.232272251 tel_us:{us_front:964 us_left:107} tel_acc:{accel_x:0.4261679 accel_y:-0.39743748 accel_z:-10.01734} tel_gyro:{gyro_x:-0.093651816 gyro_y:0.11812899 gyro_z:63079.008} tel_orientation:{orientation:RIGHT}
+
+2022-03-29 13:29:49.67796 -0400 EDT m=+36.628056793 tel_us:{us_front:696 us_left:135} tel_acc:{accel_x:-0.6847417 accel_y:-1.4413095 accel_z:-6.339846} tel_gyro:{gyro_x:0.120257445 gyro_y:-0.07343154 gyro_z:1.5414e-41} tel_orientation:{orientation:RIGHT}
+
+2022-03-29 13:29:50.33232 -0400 EDT m=+37.282416293 tel_us:{us_front:531 us_left:155} tel_acc:{accel_x:0.36870706 accel_y:-1.1731589 accel_z:-8.020576} tel_gyro:{gyro_x:-0.16921179 gyro_y:-0.15963377 gyro_z:2.5210285} tel_orientation:{orientation:RIGHT}
+
+2022-03-29 13:29:51.148328 -0400 EDT m=+38.098423626 tel_us:{us_front:311 us_left:174} tel_acc:{accel_x:-0.7182605 accel_y:-2.719813 accel_z:-8.571242} tel_gyro:{gyro_x:-0.046825908 gyro_y:-0.17878982 gyro_z:1.401e-42} tel_orientation:{orientation:RIGHT}
+
+2022-03-29 13:29:52.955307 -0400 EDT m=+39.905401376 tel_us:{us_front:1077 us_left:215} tel_acc:{accel_x:-1.1540052 accel_y:0.33997664 accel_z:-15.011644} tel_gyro:{gyro_x:0.18623939 gyro_y:-0.17559716 gyro_z:1.4235926e-13} tel_orientation:{orientation:DOWN}
+
+2022-03-29 13:29:53.823426 -0400 EDT m=+40.773520251 tel_us:{us_front:859 us_left:177} tel_acc:{accel_x:-0.25857377 accel_y:0.37828386 accel_z:-6.0142345} tel_gyro:{gyro_x:0.15218419 gyro_y:0.20752391 gyro_z:2.803e-42} tel_orientation:{orientation:DOWN}
+
+2022-03-29 13:29:54.467299 -0400 EDT m=+41.417392876 tel_us:{us_front:169 us_left:135} tel_acc:{accel_x:0.8571242 accel_y:-1.1779473 accel_z:-4.9320555} tel_gyro:{gyro_x:1.9411467 gyro_y:-0.006385351 gyro_z:4.0675975e-36} tel_orientation:{orientation:DOWN}
+
+2022-03-29 13:29:55.024653 -0400 EDT m=+41.974746501 tel_us:{us_front:106 us_left:107} tel_acc:{accel_x:5.559336 accel_y:2.7389667 accel_z:-4.6255975} tel_gyro:{gyro_x:-3.9099634 gyro_y:0.10961519 gyro_z:8.408e-42} tel_orientation:{orientation:DOWN}
+
+2022-03-29 13:29:55.775099 -0400 EDT m=+42.725191960 tel_us:{us_front:694 us_left:97} tel_acc:{accel_x:-1.3982137 accel_y:-4.050989 accel_z:-5.722142} tel_gyro:{gyro_x:-0.11280786 gyro_y:0.13302815 gyro_z:1e-45} tel_orientation:{orientation:DOWN}
+
+2022-03-29 13:29:56.656478 -0400 EDT m=+43.606570126 tel_us:{us_front:682 us_left:90} tel_acc:{accel_x:-1.9967642 accel_y:0.05746084 accel_z:-9.184157} tel_gyro:{gyro_x:0.14473462 gyro_y:-0.009578027 gyro_z:1.5414e-41} tel_orientation:{orientation:DOWN}
+
+2022-03-29 13:29:57.293976 -0400 EDT m=+44.244068210 tel_us:{us_front:684 us_left:90} tel_acc:{accel_x:-4.343082 accel_y:-2.0254946 accel_z:-11.051635} tel_gyro:{gyro_x:-0.9684449 gyro_y:0.24583602 gyro_z:8.408e-42} tel_orientation:{orientation:DOWN}
+
+2022-03-29 13:29:57.917891 -0400 EDT m=+44.867983126 tel_us:{us_front:-2 us_left:100} tel_acc:{accel_x:-2.3223755 accel_y:1.8531121 accel_z:-4.060566} tel_gyro:{gyro_x:-0.044697456 gyro_y:0.0010642252} tel_orientation:{orientation:DOWN}
+
+2022-03-29 13:29:59.675343 -0400 EDT m=+46.625434001 tel_us:{us_front:-2 us_left:445} tel_acc:{accel_x:-4.9703627 accel_y:-4.175488 accel_z:-12.947843} tel_gyro:{gyro_x:0.4097267 gyro_y:-0.04789013 gyro_z:1.5414e-41} tel_orientation:{orientation:LEFT}
+
+2022-03-29 13:30:00.274631 -0400 EDT m=+47.224721085 tel_us:{us_front:280 us_left:411} tel_acc:{accel_x:6.7468605 accel_y:2.3319526 accel_z:-13.110648} tel_gyro:{gyro_x:-1.2802628 gyro_y:0.23519376 gyro_z:1.5414e-41} tel_orientation:{orientation:LEFT}
+
+2022-03-29 13:30:00.926592 -0400 EDT m=+47.876681876 tel_us:{us_front:-2 us_left:401} tel_acc:{accel_x:-1.3503298 accel_y:4.548983 accel_z:2.3750482} tel_gyro:{gyro_x:0.70238864 gyro_y:0.38631374 gyro_z:252316.03} tel_orientation:{orientation:LEFT}
+
+2022-03-29 13:30:01.690653 -0400 EDT m=+48.640742210 tel_us:{us_front:-2 us_left:388} tel_acc:{accel_x:1.6519991 accel_y:-0.61770403 accel_z:-6.6606693} tel_gyro:{gyro_x:-0.07875266 gyro_y:0.0010642252 gyro_z:1e-45} tel_orientation:{orientation:LEFT}
+
+2022-03-29 13:30:02.820595 -0400 EDT m=+49.770684001 tel_us:{us_front:507 us_left:409} tel_acc:{accel_x:1.9967642 accel_y:1.5514427 accel_z:-5.4922986} tel_gyro:{gyro_x:-0.7172877 gyro_y:-0.20433123 gyro_z:1.5414e-41} tel_orientation:{orientation:LEFT}
+
+2022-03-29 13:30:03.291436 -0400 EDT m=+50.241523918 tel_us:{us_front:829 us_left:431} tel_acc:{accel_x:0.4309563 accel_y:-4.6351743 accel_z:-16.060305} tel_gyro:{gyro_x:0.72899425 gyro_y:0.997179 gyro_z:1.5414e-41} tel_orientation:{orientation:LEFT}
+
+2022-03-29 13:30:04.385454 -0400 EDT m=+51.335541960 tel_us:{us_front:602 us_left:475} tel_acc:{accel_x:0.92895025 accel_y:-2.4995465 accel_z:-11.233594} tel_gyro:{gyro_x:-0.15750532 gyro_y:-0.13409238 gyro_z:2.9508864e+38} tel_orientation:{orientation:LEFT}
+
